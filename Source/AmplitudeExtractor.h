@@ -39,7 +39,9 @@ private:
     float backgroundPower;
     bool currentlyInSignalFlag;
     std::vector<float> currentSignalPowerSeq;
+    float currentSignalPowerSum;
     int currentSignalDuration;
+    std::vector<float> attackAndReleaseTime;
 
     //Tweak setting variables
     int backgroundEstimationBlockNumThres;
