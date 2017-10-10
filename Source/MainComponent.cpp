@@ -16,10 +16,10 @@ class AudioRecorder  : public Component, public AudioIODeviceCallback
 public:
 
     AudioRecorder (AudioThumbnail& thumbnailToUpdate) : thumbnail (thumbnailToUpdate),
-    backgroundThread ("Audio Recorder Thread"),
-    sampleRate (0), nextSampleNum (0), activeWriter (nullptr)
+    // backgroundThread ("Audio Recorder Thread"), activeWriter (nullptr),
+    sampleRate (0), nextSampleNum (0)
     {
-        backgroundThread.startThread();
+        // backgroundThread.startThread();
     }
 
     ~AudioRecorder()
@@ -33,47 +33,52 @@ public:
 
         if (sampleRate > 0)
         {
-            // Create an OutputStream to write to our destination file...
-            file.deleteFile();
-            ScopedPointer<FileOutputStream> fileStream (file.createOutputStream());
+            // Reset our recording thumbnail
+            thumbnail.reset (numChannels, sampleRate);
+            nextSampleNum = 0;
 
-            if (fileStream != nullptr)
-            {
-                // Now create a WAV writer object that writes to our output stream...
-                WavAudioFormat wavFormat;
-                AudioFormatWriter* writer = wavFormat.createWriterFor (fileStream, sampleRate, 1, 16, StringPairArray(), 0);
 
-                if (writer != nullptr)
-                {
-                    fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
+            // // Create an OutputStream to write to our destination file...
+            // file.deleteFile();
+            // ScopedPointer<FileOutputStream> fileStream (file.createOutputStream());
 
-                    // Now we'll create one of these helper objects which will act as a FIFO buffer, and will
-                    // write the data to disk on our background thread.
-                    threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, backgroundThread, 32768);
+            // if (fileStream != nullptr)
+            // {
+            //     // Now create a WAV writer object that writes to our output stream...
+            //     WavAudioFormat wavFormat;
+            //     AudioFormatWriter* writer = wavFormat.createWriterFor (fileStream, sampleRate, 1, 16, StringPairArray(), 0);
 
-                    // Reset our recording thumbnail
-                    thumbnail.reset (writer->getNumChannels(), writer->getSampleRate());
-                    nextSampleNum = 0;
+            //     if (writer != nullptr)
+            //     {
+            //         fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
 
-                    // And now, swap over our active writer pointer so that the audio callback will start using it..
-                    const ScopedLock sl (writerLock);
-                    activeWriter = threadedWriter;
-                }
-            }
+            //         // Now we'll create one of these helper objects which will act as a FIFO buffer, and will
+            //         // write the data to disk on our background thread.
+            //         threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, backgroundThread, 32768);
+
+            //         // Reset our recording thumbnail
+            //         thumbnail.reset (writer->getNumChannels(), writer->getSampleRate());
+            //         nextSampleNum = 0;
+
+            //         // And now, swap over our active writer pointer so that the audio callback will start using it..
+            //         const ScopedLock sl (writerLock);
+            //         activeWriter = threadedWriter;
+            //     }
+            // }
         }
     }
 
     void stop()
     {
-        // First, clear this pointer to stop the audio callback from using our writer object..
-        {
-            const ScopedLock sl (writerLock);
-            activeWriter = nullptr;
-        }
-        // Now we can delete the writer object. It's done in this order because the deletion could
-        // take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
-        // the audio callback while this happens.
-        threadedWriter = nullptr;
+        // // First, clear this pointer to stop the audio callback from using our writer object..
+        // {
+        //     const ScopedLock sl (writerLock);
+        //     activeWriter = nullptr;
+        // }
+        // // Now we can delete the writer object. It's done in this order because the deletion could
+        // // take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
+        // // the audio callback while this happens.
+        // threadedWriter = nullptr;
     }
 
     bool isRecording() const
@@ -92,6 +97,8 @@ public:
         for (int channel = 0;channel < numChannels;channel++) {
             amplitudeExtractors.push_back(new AmplitudeExtractor(systemBufferSize, sampleRate));
         }
+
+        signalStatus = 0;
         
         std::cout << "Sample Rate: "<< sampleRate << std::endl << "System Buffer Size: "<< systemBufferSize << std::endl;
     }
@@ -109,13 +116,13 @@ public:
         AudioSampleBuffer readBuffer (const_cast<float**> (inputChannelData), numOutputChannels, numSamples);
         
         for (int channel = 0; channel < numOutputChannels-1; channel++) {
-            amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
+            signalStatus = amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
         }
 
-       const ScopedLock sl (writerLock);
-       if (activeWriter != nullptr)
+    //    const ScopedLock sl (writerLock);
+       if (signalStatus == 1)
        {
-           activeWriter->write (inputChannelData, numSamples);
+        //    activeWriter->write (inputChannelData, numSamples);
            thumbnail.addBlock (nextSampleNum, wavFileBuffer, 0, numSamples);
            nextSampleNum += numSamples;
        }
@@ -129,14 +136,15 @@ public:
 
 private:
     AudioThumbnail& thumbnail;
-    TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    ScopedPointer<AudioFormatWriter::ThreadedWriter> threadedWriter; // the FIFO used to buffer the incoming data
+    // TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
+    // ScopedPointer<AudioFormatWriter::ThreadedWriter> threadedWriter; // the FIFO used to buffer the incoming data
     AudioSampleBuffer wavFileBuffer, readBuffer;
     std::vector<ScopedPointer<AmplitudeExtractor>> amplitudeExtractors;
     
     double sampleRate;
     int numChannels;
     int systemBufferSize;
+    int signalStatus;
     int64 nextSampleNum;
     
 

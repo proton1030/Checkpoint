@@ -21,14 +21,15 @@ public:
     void initialize();
     void clear();
     
-    void process(const float* currentBlockPtr);
+    int process(const float* currentBlockPtr);
     void backgroundPowerEstimation(float blockPower);
-    void calculateADSR();
+    
 
     
     
     
 private:
+    void calculateADSR();
     //System-acquired parameters
     int systemBufferSize;
     double sampleRate;
