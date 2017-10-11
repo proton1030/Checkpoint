@@ -94,7 +94,8 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
                 return 0;
             }
         }
-    }  
+    }
+    return 0;
 };
 
 void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
