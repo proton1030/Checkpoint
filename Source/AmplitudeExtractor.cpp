@@ -12,6 +12,7 @@
 // #include <thread>
 #include <algorithm>
 #include <math.h>
+#include <cmath>
 
 AmplitudeExtractor::AmplitudeExtractor(const int& systemBufferSize, const double& sampleRate): systemBufferSize(systemBufferSize), sampleRate(sampleRate)
 {
@@ -29,19 +30,22 @@ void AmplitudeExtractor::initialize()
     currentSignalPowerSeq = {};
     currentSignalPowerSum = 0;
     currentSignalDuration = 0;
-    attackAndReleaseTime = {0.0f , 0.0f};
+    ADSRTime = {0.0f , 0.0f, 0.0f, 0.0f};
+    ADSRCache = {};
 
     //Initialization settings
     backgroundEstimationBlockNumThres = 20;
     signalDetectionThres = 40;
     signalDurationThres = 20;
     averagingOrder = 4;
-    
-    
+    leastSearchSustainBlkLength = 50; //Release begin time search stops if maxval didn't get updated after searching this much blks.
+    minAtkRelDist = 10; // Minimum sustain length and consider the envelope only consists of attack and decay if sustain<minAtkRelDist.
+    sustainDiffRatio = 0.01;
+
 };
 void AmplitudeExtractor::clear()
 {
-    
+    initialize();
 };
 
 int AmplitudeExtractor::process(const float* currentBlockPtr)
@@ -64,8 +68,6 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
             currentSignalDuration += 1;
             currentSignalPowerSum += currentBlockRMS;
             return 1;
-            
-    
         }
         else if (currentlyInSignalFlag && currentBlockRMS >= signalDetectionThres * backgroundPower)
         {
@@ -84,6 +86,9 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
                 calculateADSR();
                 currentSignalPowerSeq = {};
                 currentSignalDuration = 0;
+                std::vector<float> temp;
+                temp = getAverageADSRCache();
+                std::cout<<temp[0]<<"|"<<temp[1]<<"|"<<temp[2]<<"|"<<temp[3]<<std::endl;
                 return 0;
             }
             else
@@ -108,50 +113,108 @@ void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
 };
 
 void AmplitudeExtractor::calculateADSR()
+
 {
     int currentSignalSize = (int)currentSignalPowerSeq.size();
     float attackEndDetection;
     float releaseBeginDetection;
     float attackDetectionMax = 0.0f, releaseDetectionMax = 0.0f;
     int attackDetectionMaxIndex = 0, releaseDetectionMaxIndex = 0;
+    int releaseSearchNum = 0;
 
-    // averageFiltering(averagingOrder);
+    averageFiltering(averagingOrder, currentSignalSize);
 
     for (int i = 1; i < currentSignalSize; i++) 
     {
         attackEndDetection = currentSignalPowerSeq[i] * (currentSignalSize - i/2);
-        releaseBeginDetection = currentSignalPowerSeq[i] * (i/2 + currentSignalSize/2);
         if (attackEndDetection > attackDetectionMax)
         {
             attackDetectionMax = attackEndDetection;
             attackDetectionMaxIndex = i;
         }
-        if (releaseBeginDetection > releaseDetectionMax)
+        if (releaseSearchNum < leastSearchSustainBlkLength)
         {
-            releaseDetectionMax = releaseBeginDetection;
-            releaseDetectionMaxIndex = i;
+            releaseBeginDetection = currentSignalPowerSeq[currentSignalSize-i] * (currentSignalSize - i/2);
+            if (releaseBeginDetection > releaseDetectionMax)
+            {
+                releaseDetectionMax = releaseBeginDetection;
+                releaseDetectionMaxIndex = i;
+                releaseSearchNum = 0;
+            }
+            else
+                releaseSearchNum ++;
         }
     }
 
+    if (currentSignalSize - (attackDetectionMaxIndex + releaseDetectionMaxIndex) > minAtkRelDist)
+    {
+        float maxSustainPower = 0.0f;
+        float minSustainPower = 0.0f;
+        for (int i = 0; i < minAtkRelDist/2; i++)
+        {
+            maxSustainPower += currentSignalPowerSeq[attackDetectionMaxIndex + i];
+            minSustainPower += currentSignalPowerSeq[currentSignalSize - releaseDetectionMaxIndex - i - 1];
+        }
+        maxSustainPower /= minAtkRelDist/2;
+        minSustainPower /= minAtkRelDist/2;
+        if (std::abs(maxSustainPower-minSustainPower) / maxSustainPower > sustainDiffRatio)
+        {
+            ADSRTime[0] = (attackDetectionMaxIndex);
+            ADSRTime[2] = 1.0;
+            ADSRTime[2] = 1.0;
+            ADSRTime[3] = (releaseDetectionMaxIndex);   
+        }
+        else
+        {
+            ADSRTime[0] = (attackDetectionMaxIndex);
+            ADSRTime[2] = 1.0;
+            ADSRTime[3] = (releaseDetectionMaxIndex);
+        }
+    }
+    else
+    {
+        ADSRTime[0] = (attackDetectionMaxIndex);
+        ADSRTime[1] = (releaseDetectionMaxIndex);
+    }
+    ADSRCache.push_back(ADSRTime);
+
     // * systemBufferSize / sampleRate
-    attackAndReleaseTime[0] = (attackDetectionMaxIndex+1);
-    attackAndReleaseTime[1] = (currentSignalSize - releaseDetectionMaxIndex);
-    std::cout << attackAndReleaseTime[0] << " | " << attackAndReleaseTime[1] << std::endl;
-    std::cout << currentSignalSize <<std::endl;
 };
 
-void AmplitudeExtractor::averageFiltering(int order)
+void AmplitudeExtractor::averageFiltering(int order, int signalSize)
 {
-    std::vector<float> outputSignal = {};
+    
+    std::vector<float> outputSignal;
     float sumBuffer = 0.0;
-    for (int i = 0; i < (int)currentSignalPowerSeq.size(); i++)
-    {
+    for (int i = 0; i < signalSize; i++)
+    { 
         if (i < order)
             sumBuffer += currentSignalPowerSeq[i];
         else
             sumBuffer = sumBuffer + currentSignalPowerSeq[i] - currentSignalPowerSeq[i-order];
-        outputSignal[i] = sumBuffer / order;
+        outputSignal.push_back(sumBuffer/order);
     }
+    for (int i = 0; i < signalSize; i++)
+        currentSignalPowerSeq[i] = outputSignal[i];
+}
+
+std::vector<float> AmplitudeExtractor::getAverageADSRCache()
+{
+    std::vector<float> returnedADSR = {0.0f, 0.0f, 0.0f, 0.0f};
+    int ADSRCacheSize = (int)ADSRCache.size();
+    if (ADSRCacheSize > 0)
+    {
+        for (int i=0;i<4;i++)
+        {
+            float tempSum = 0.0f;
+            for (int k=0;k<ADSRCacheSize;k++)
+            {
+                tempSum += ADSRCache[k][i];
+            }
+            returnedADSR[i] = tempSum/ADSRCacheSize;
+        }
+    }
+    return returnedADSR;
 }
 
 

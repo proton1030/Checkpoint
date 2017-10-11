@@ -23,8 +23,8 @@ public:
     
     int process(const float* currentBlockPtr);
     void backgroundPowerEstimation(float blockPower);
-    void averageFiltering(int order);
-    
+    void averageFiltering(int order, int signalSize);
+    std::vector<float> getAverageADSRCache();
 
     
     
@@ -44,13 +44,18 @@ private:
     std::vector<float> currentSignalPowerSeq;
     float currentSignalPowerSum;
     int currentSignalDuration;
-    std::vector<float> attackAndReleaseTime;
+    std::vector<float> ADSRTime;
+    std::vector<std::vector<float>> ADSRCache;
+    // std::vector<std::vector<float>>
     int averagingOrder;
 
     //Tweak setting variables
     int backgroundEstimationBlockNumThres;
     int signalDetectionThres;
     int signalDurationThres;
+    int leastSearchSustainBlkLength;
+    int minAtkRelDist;
+    float sustainDiffRatio;
     
 
     

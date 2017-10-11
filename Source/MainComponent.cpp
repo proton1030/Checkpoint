@@ -163,6 +163,7 @@ public:
             startRecording();
         else if (signalStatus == 0 && lastSignalStatus == 1)
             stop();
+
         else if (signalStatus == 1 && lastSignalStatus == 1)
         {
             thumbnail.addBlock (nextSampleNum, wavFileBuffer, 0, numSamples);
@@ -201,8 +202,7 @@ public:
         
         for (int channel = 0; channel < numOutputChannels-1; channel++) {
             signalStatus = amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
-            // std::cout << signalStatus << std::endl;
-
+            ADSRValues = amplitudeExtractors[channel]->getAverageADSRCache();
         }
 
         triggerThumbnail(numSamples, wavFileBuffer);
@@ -236,6 +236,7 @@ private:
     int signalStatus;
     int lastSignalStatus;
     int64 nextSampleNum;
+    std::vector<float> ADSRValues;
     
 
     CriticalSection writerLock;
@@ -266,11 +267,11 @@ public:
         // explanationLabel.setColour (TextEditor::textColourId, Colours::black);
         // explanationLabel.setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-        addAndMakeVisible (recordButton);
-        recordButton.setButtonText ("Record");
-        recordButton.addListener (this);
-        recordButton.setColour (TextButton::buttonColourId, Colour (0xffff5c5c));
-        recordButton.setColour (TextButton::textColourOnId, Colours::black);
+        // addAndMakeVisible (recordButton);
+        // recordButton.setButtonText ("Record");
+        // recordButton.addListener (this);
+        // recordButton.setColour (TextButton::buttonColourId, Colour (0xffff5c5c));
+        // recordButton.setColour (TextButton::textColourOnId, Colours::black);
 
         addAndMakeVisible (recordingThumbnail);
 
@@ -295,12 +296,13 @@ public:
         g.setColour (Colour (0xffffffff));
     }
 
+
     void resized() override
     {
         Rectangle<int> area (getLocalBounds());
         liveAudioScroller.setBounds (area.removeFromTop (80).reduced (0));
         recordingThumbnail.setBounds (area.removeFromTop (80).reduced (0));
-        recordButton.setBounds (area.removeFromTop (36).removeFromLeft (140).reduced (8));
+        // recordButton.setBounds (area.removeFromTop (36).removeFromLeft (140).reduced (8));
         // explanationLabel.setBounds (area.reduced (8));
     }
 
