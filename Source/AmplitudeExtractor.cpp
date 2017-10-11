@@ -9,7 +9,9 @@
 #include "AmplitudeExtractor.h"
 #include <iostream>
 #include <vector>
-#include <thread>
+// #include <thread>
+#include <algorithm>
+#include <math.h>
 
 AmplitudeExtractor::AmplitudeExtractor(const int& systemBufferSize, const double& sampleRate): systemBufferSize(systemBufferSize), sampleRate(sampleRate)
 {
@@ -31,8 +33,9 @@ void AmplitudeExtractor::initialize()
 
     //Initialization settings
     backgroundEstimationBlockNumThres = 20;
-    signalDetectionThres = 800;
+    signalDetectionThres = 40;
     signalDurationThres = 20;
+    averagingOrder = 4;
     
     
 };
@@ -47,40 +50,38 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
     for (int i = 0; i < systemBufferSize; i++) {
         currentBlockPower += pow(currentBlockPtr[i], 2.0f);
     }
-
-    // std::cout << currentlyInSignalFlag << "  |  " << currentBlockPower << "  |  " << currentSignalDuration << std::endl;
+    currentBlockRMS = sqrt (currentBlockPower / systemBufferSize);
 
     if (earlyBlockNums <= backgroundEstimationBlockNumThres) {
-        backgroundPowerEstimation(currentBlockPower);
+        backgroundPowerEstimation(currentBlockRMS);
         return 0;
     }
     else{
-        if (!currentlyInSignalFlag && currentBlockPower >= signalDetectionThres * backgroundPower ) 
+        if (!currentlyInSignalFlag && currentBlockRMS >= signalDetectionThres * backgroundPower ) 
         {
             currentlyInSignalFlag = true;
-            currentSignalPowerSeq.push_back(currentBlockPower);
+            currentSignalPowerSeq.push_back(currentBlockRMS);
             currentSignalDuration += 1;
-            currentSignalPowerSum += currentBlockPower;
+            currentSignalPowerSum += currentBlockRMS;
             return 1;
             
     
         }
-        else if (currentlyInSignalFlag && currentBlockPower >= signalDetectionThres * backgroundPower)
+        else if (currentlyInSignalFlag && currentBlockRMS >= signalDetectionThres * backgroundPower)
         {
             currentSignalDuration += 1;
-            currentSignalPowerSeq.push_back(currentBlockPower);
-            currentSignalPowerSum += currentBlockPower;
+            currentSignalPowerSeq.push_back(currentBlockRMS);
+            currentSignalPowerSum += currentBlockRMS;
             return 1;
         }
-        else if (currentlyInSignalFlag && currentBlockPower < signalDetectionThres * backgroundPower)
+        else if (currentlyInSignalFlag && currentBlockRMS < signalDetectionThres * backgroundPower)
         {
             if (currentSignalDuration >= signalDurationThres)
             {
                 currentlyInSignalFlag = false;
-                std::thread t(&AmplitudeExtractor::calculateADSR, this);
-                t.detach();
-                std::cout << "test" <<std::endl;
-                // calculateADSR();
+                // std::thread t(&AmplitudeExtractor::calculateADSR, this);
+                // t.detach();
+                calculateADSR();
                 currentSignalPowerSeq = {};
                 currentSignalDuration = 0;
                 return 0;
@@ -91,9 +92,7 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
                 currentSignalPowerSeq = {};
                 currentSignalDuration = 0;
                 return 0;
-
             }
-            // std::cout << "Signal detected" << std::endl;
         }
     }  
 };
@@ -105,50 +104,53 @@ void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
     if (earlyBlockNums > backgroundEstimationBlockNumThres){
         backgroundPower /= backgroundEstimationBlockNumThres;
     }
-
 };
 
 void AmplitudeExtractor::calculateADSR()
 {
-
     int currentSignalSize = (int)currentSignalPowerSeq.size();
-    float attackEndDetection[currentSignalSize];
-    float releaseBeginDetection[currentSignalSize];
-    attackEndDetection[0] = releaseBeginDetection[currentSignalSize-1] = 0;
-    float tempAttackSum = currentSignalPowerSum-currentSignalPowerSeq[0], tempReleaseSum = currentSignalPowerSum-currentSignalPowerSeq[currentSignalSize];
+    float attackEndDetection;
+    float releaseBeginDetection;
     float attackDetectionMax = 0.0f, releaseDetectionMax = 0.0f;
     int attackDetectionMaxIndex = 0, releaseDetectionMaxIndex = 0;
 
-    for (int i = 1; i <= currentSignalSize-1; i++) 
+    // averageFiltering(averagingOrder);
+
+    for (int i = 1; i < currentSignalSize; i++) 
     {
-        for (int j = 1;j <= i;j++)
+        attackEndDetection = currentSignalPowerSeq[i] * (currentSignalSize - i/2);
+        releaseBeginDetection = currentSignalPowerSeq[i] * (i/2 + currentSignalSize/2);
+        if (attackEndDetection > attackDetectionMax)
         {
-            attackEndDetection[i] += j;
-            currentSignalPowerSeq[j] * currentSignalPowerSeq[i] * pow(100.0 , j / i) / 100.0;
-            releaseBeginDetection[i] += currentSignalPowerSeq[currentSignalSize-1-j] * (j / i); 
-        }
-        attackEndDetection[i] += currentSignalPowerSeq[i] * (tempAttackSum -= currentSignalPowerSeq[i]);
-        releaseBeginDetection[i] += currentSignalPowerSeq[currentSignalSize-1-i] * (tempReleaseSum -= currentSignalPowerSeq[currentSignalSize-1-i]);
-        if (attackEndDetection[i] > attackDetectionMax)
-        {
-            attackDetectionMax = attackEndDetection[i];
+            attackDetectionMax = attackEndDetection;
             attackDetectionMaxIndex = i;
         }
-        if (releaseBeginDetection[i] > releaseDetectionMax)
+        if (releaseBeginDetection > releaseDetectionMax)
         {
-            releaseDetectionMax = releaseBeginDetection[i];
+            releaseDetectionMax = releaseBeginDetection;
             releaseDetectionMaxIndex = i;
         }
-        const MessageManagerLock mml (Thread::getCurrentThread());
-        if (! mml.lockWasGained())  // if something is trying to kill this job, the lock
-            return; 
     }
 
-    attackAndReleaseTime[0] = (attackDetectionMaxIndex+1) * systemBufferSize / sampleRate;
-    attackAndReleaseTime[1] = (currentSignalSize - releaseDetectionMaxIndex) * systemBufferSize / sampleRate;
+    // * systemBufferSize / sampleRate
+    attackAndReleaseTime[0] = (attackDetectionMaxIndex+1);
+    attackAndReleaseTime[1] = (currentSignalSize - releaseDetectionMaxIndex);
     std::cout << attackAndReleaseTime[0] << " | " << attackAndReleaseTime[1] << std::endl;
     std::cout << currentSignalSize <<std::endl;
-
 };
+
+void AmplitudeExtractor::averageFiltering(int order)
+{
+    std::vector<float> outputSignal = {};
+    float sumBuffer = 0.0;
+    for (int i = 0; i < (int)currentSignalPowerSeq.size(); i++)
+    {
+        if (i < order)
+            sumBuffer += currentSignalPowerSeq[i];
+        else
+            sumBuffer = sumBuffer + currentSignalPowerSeq[i] - currentSignalPowerSeq[i-order];
+        outputSignal[i] = sumBuffer / order;
+    }
+}
 
 

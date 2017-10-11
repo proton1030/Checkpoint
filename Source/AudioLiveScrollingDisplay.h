@@ -40,7 +40,7 @@ public:
     LiveScrollingAudioDisplay()  : AudioVisualiserComponent (1)
     {
         setSamplesPerBlock (512);
-        setBufferSize (512);
+        setBufferSize (1024);
     }
 
     //==============================================================================

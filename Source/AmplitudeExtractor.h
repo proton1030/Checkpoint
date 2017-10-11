@@ -23,6 +23,7 @@ public:
     
     int process(const float* currentBlockPtr);
     void backgroundPowerEstimation(float blockPower);
+    void averageFiltering(int order);
     
 
     
@@ -36,6 +37,7 @@ private:
     
     //Internal variables
     float currentBlockPower;
+    float currentBlockRMS;
     int earlyBlockNums;
     float backgroundPower;
     bool currentlyInSignalFlag;
@@ -43,6 +45,7 @@ private:
     float currentSignalPowerSum;
     int currentSignalDuration;
     std::vector<float> attackAndReleaseTime;
+    int averagingOrder;
 
     //Tweak setting variables
     int backgroundEstimationBlockNumThres;
