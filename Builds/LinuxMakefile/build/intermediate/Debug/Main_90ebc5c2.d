@@ -467,5 +467,6 @@ build/intermediate/Debug/Main_90ebc5c2.o: ../../Source/Main.cpp \
  /home/hanyu/JUCE/modules/juce_video/juce_video.h \
  /home/hanyu/JUCE/modules/juce_video/playback/juce_VideoComponent.h \
  /home/hanyu/JUCE/modules/juce_video/capture/juce_CameraDevice.h \
- ../../Source/MainComponent.cpp ../../Source/AudioLiveScrollingDisplay.h \
+ ../../Source/GUI.h ../../Source/MainComponent.cpp \
+ ../../Source/AudioLiveScrollingDisplay.h \
  ../../Source/AmplitudeExtractor.h

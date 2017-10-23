@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="jelHjf" name="recordingtest" displaySplashScreen="1" reportAppUsage="1"
+<JUCERPROJECT id="jelHjf" name="checkpoint" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
-              bundleIdentifier="com.yourcompany.recordingtest" includeBinaryInAppConfig="1"
+              bundleIdentifier="com.yourcompany.checkpoint" includeBinaryInAppConfig="1"
               cppLanguageStandard="11" jucerVersion="5.1.2">
-  <MAINGROUP id="XxUq6m" name="recordingtest">
+  <MAINGROUP id="XxUq6m" name="checkpoint">
     <GROUP id="{C6541130-9284-B5C2-B7A5-C21A59DC0859}" name="Source">
+      <FILE id="nvO87k" name="GUI.cpp" compile="1" resource="0" file="Source/GUI.cpp"/>
+      <FILE id="d2zi5Y" name="GUI.h" compile="1" resource="0" file="Source/GUI.h"/>
       <FILE id="Z0dQDU" name="AmplitudeExtractor.h" compile="1" resource="0"
             file="Source/AmplitudeExtractor.h"/>
       <FILE id="t41wc0" name="AmplitudeExtractor.cpp" compile="1" resource="0"
@@ -20,8 +22,8 @@
   <EXPORTFORMATS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="recordingtest"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="recordingtest"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"/>
+        <CONFIGURATION name="Release" isDebug="1" optimisation="3" targetName="checkpoint"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../../juce"/>

@@ -9,17 +9,17 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.cpp"
 #include <iostream>
+#include "GUI.h"
 
 // Component* createMainContentComponent();
 
 //==============================================================================
-class recordingtestApplication  : public JUCEApplication
+class checkpointApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    recordingtestApplication() {}
+    checkpointApplication() {}
 
     const String getApplicationName() override       { return ProjectInfo::projectName; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -72,7 +72,7 @@ public:
                                                     DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (new AudioRecordingDemo(),true);
+            setContentOwned (new GUI(),true);
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
         }
@@ -103,4 +103,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (recordingtestApplication)
+START_JUCE_APPLICATION (checkpointApplication)
