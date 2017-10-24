@@ -93,6 +93,11 @@ public:
     {
         stop();
     }
+    
+    void initializing ()
+    {
+        
+    }
 
     // const File& file
     void startRecording ()
