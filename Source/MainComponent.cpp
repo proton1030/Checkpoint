@@ -42,7 +42,7 @@ public:
     {
         g.fillAll (Colours::darkgrey);
         g.setColour (Colours::lightgrey);
-
+        setDisplayFullThumbnail(displayFull);
         if (thumbnail.getTotalLength() > 0.0)
         {
             const double endTime = displayFullThumb ? thumbnail.getTotalLength()
@@ -50,7 +50,7 @@ public:
 
             Rectangle<int> thumbArea (getLocalBounds());
             thumbnail.drawChannel (g, thumbArea.reduced (2), 0.0, endTime,0 , 1.0f);
-            setDisplayFullThumbnail(displayFull);
+            
         }
         else
         {
@@ -79,11 +79,10 @@ private:
 //===============================================================================================================
 
 
-class AudioRecorder  : public Component, public AudioIODeviceCallback
+class AudioRecorder  : public Component, public AudioIODeviceCallback, public ChangeListener, public ChangeBroadcaster
 {
 public:
     AudioRecorder (AudioThumbnail& thumbnailToUpdate, bool& displayFullToUpdate) : thumbnail (thumbnailToUpdate), displayFull (displayFullToUpdate),
-    // backgroundThread ("Audio Recorder Thread"), activeWriter (nullptr),
     sampleRate (0), nextSampleNum (0)
     {
         // backgroundThread.startThread();
@@ -109,51 +108,13 @@ public:
             // Reset our recording thumbnail
             thumbnail.reset (numChannels, sampleRate);
             nextSampleNum = 0;
-            displayFull = 0;
-
-
-            // // Create an OutputStream to write to our destination file...
-            // file.deleteFile();
-            // ScopedPointer<FileOutputStream> fileStream (file.createOutputStream());
-
-            // if (fileStream != nullptr)
-            // {
-            //     // Now create a WAV writer object that writes to our output stream...
-            //     WavAudioFormat wavFormat;
-            //     AudioFormatWriter* writer = wavFormat.createWriterFor (fileStream, sampleRate, 1, 16, StringPairArray(), 0);
-
-            //     if (writer != nullptr)
-            //     {
-            //         fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
-
-            //         // Now we'll create one of these helper objects which will act as a FIFO buffer, and will
-            //         // write the data to disk on our background thread.
-            //         threadedWriter = new AudioFormatWriter::ThreadedWriter (writer, backgroundThread, 32768);
-
-            //         // Reset our recording thumbnail
-            //         thumbnail.reset (writer->getNumChannels(), writer->getSampleRate());
-            //         nextSampleNum = 0;
-
-            //         // And now, swap over our active writer pointer so that the audio callback will start using it..
-            //         const ScopedLock sl (writerLock);
-            //         activeWriter = threadedWriter;
-            //     }
-            // }
+            displayFull = false;
         }
     }
 
     void stop()
     {
         displayFull = true;
-        // // First, clear this pointer to stop the audio callback from using our writer object..
-        // {
-        //     const ScopedLock sl (writerLock);
-        //     activeWriter = nullptr;
-        // }
-        // // Now we can delete the writer object. It's done in this order because the deletion could
-        // // take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
-        // // the audio callback while this happens.
-        // threadedWriter = nullptr;
     }
 
     bool isRecording()
@@ -184,7 +145,9 @@ public:
         systemBufferSize = device->getCurrentBufferSizeSamples();
         amplitudeExtractors.clear();
         for (int channel = 0;channel < numChannels;channel++) {
-            amplitudeExtractors.push_back(new AmplitudeExtractor(systemBufferSize, sampleRate));
+            AmplitudeExtractor* ampExt = new AmplitudeExtractor(systemBufferSize, sampleRate);
+            ampExt->addChangeListener(this);
+            amplitudeExtractors.push_back(ampExt);
         }
 
         signalStatus = 0;
@@ -212,13 +175,6 @@ public:
 
         triggerThumbnail(numSamples, wavFileBuffer);
 
-    //    const ScopedLock sl (writerLock);
-    //    if (signalStatus == 1)
-    //    {
-    //     //    activeWriter->write (inputChannelData, numSamples);
-    //        thumbnail.addBlock (nextSampleNum, wavFileBuffer, 0, numSamples);
-    //        nextSampleNum += numSamples;
-    //    }
         
         for (int i = 0; i < numOutputChannels; ++i)
         {
@@ -226,12 +182,20 @@ public:
                 FloatVectorOperations::clear (outputChannelData[i], numSamples);
         }
     }
+    
+    std::vector<float>& getADSRValues()
+    {
+        return amplitudeExtractors[0]->getFinalADSR();
+    }
+    
+    void changeListenerCallback (ChangeBroadcaster* source) override
+    {
+        sendChangeMessage();
+    }
 
 private:
     AudioThumbnail& thumbnail;
     bool& displayFull;
-    // TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    // ScopedPointer<AudioFormatWriter::ThreadedWriter> threadedWriter; // the FIFO used to buffer the incoming data
     AudioSampleBuffer wavFileBuffer, readBuffer;
     std::vector<ScopedPointer<AmplitudeExtractor>> amplitudeExtractors;
     
@@ -242,10 +206,6 @@ private:
     int lastSignalStatus;
     int64 nextSampleNum;
     std::vector<float> ADSRValues;
-    
-
-    CriticalSection writerLock;
-    AudioFormatWriter::ThreadedWriter* volatile activeWriter;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioRecorder)
 };

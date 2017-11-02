@@ -9,13 +9,12 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <vector>
 
-class AmplitudeExtractor
+class AmplitudeExtractor : public Component, public ChangeBroadcaster, public Value::Listener
 {
 public:
     AmplitudeExtractor(
                  const int& systemBufferSize,
                  const double& sampleRate );
-    
     ~AmplitudeExtractor() {}
     
     void initialize();
@@ -25,12 +24,16 @@ public:
     void backgroundPowerEstimation(float blockPower);
     void averageFiltering(int order, int signalSize);
     std::vector<float> getAverageADSRCache();
+    std::vector<float>& getFinalADSR();
+    void finalADSRSet(std::vector<float> ADSR);
 
     
     
     
 private:
     void calculateADSR();
+    void valueChanged (Value& value);
+    
     //System-acquired parameters
     int systemBufferSize;
     double sampleRate;
@@ -45,9 +48,10 @@ private:
     float currentSignalPowerSum;
     int currentSignalDuration;
     std::vector<float> ADSRTime;
+    std::vector<float> finalADSR;
     std::vector<std::vector<float>> ADSRCache;
-    // std::vector<std::vector<float>>
     int averagingOrder;
+    Value currentCacheSize;
 
     //Tweak setting variables
     int backgroundEstimationBlockNumThres;

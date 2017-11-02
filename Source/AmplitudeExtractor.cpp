@@ -9,7 +9,6 @@
 #include "AmplitudeExtractor.h"
 #include <iostream>
 #include <vector>
-// #include <thread>
 #include <algorithm>
 #include <math.h>
 #include <cmath>
@@ -22,6 +21,8 @@ AmplitudeExtractor::AmplitudeExtractor(const int& systemBufferSize, const double
 
 void AmplitudeExtractor::initialize()
 {
+    this->setComponentID("ADSRExt");
+    
     //Internal variables settings
     currentBlockPower = 0.0f;
     earlyBlockNums = 1;
@@ -32,6 +33,9 @@ void AmplitudeExtractor::initialize()
     currentSignalDuration = 0;
     ADSRTime = {0.0f , 0.0f, 0.0f, 0.0f};
     ADSRCache = {};
+    finalADSR = {0.0f , 0.0f, 0.0f, 0.0f};
+    currentCacheSize.setValue(0);
+    currentCacheSize.addListener(this);
 
     //Initialization settings
     backgroundEstimationBlockNumThres = 20;
@@ -41,6 +45,8 @@ void AmplitudeExtractor::initialize()
     leastSearchSustainBlkLength = 50; //Release begin time search stops if maxval didn't get updated after searching this much blks.
     minAtkRelDist = 10; // Minimum sustain length and consider the envelope only consists of attack and decay if sustain<minAtkRelDist.
     sustainDiffRatio = 0.01;
+    
+//    finalADSR.addListener(this);
 
 };
 void AmplitudeExtractor::clear()
@@ -86,9 +92,9 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
                 calculateADSR();
                 currentSignalPowerSeq = {};
                 currentSignalDuration = 0;
-                std::vector<float> temp;
-                temp = getAverageADSRCache();
-                std::cout<<temp[0]<<"|"<<temp[1]<<"|"<<temp[2]<<"|"<<temp[3]<<std::endl;
+                finalADSR = getAverageADSRCache();
+                currentCacheSize.setValue((int)currentCacheSize.getValue() + 1);
+//                std::cout<<temp[0]<<"|"<<temp[1]<<"|"<<temp[2]<<"|"<<temp[3]<<std::endl;
                 return 0;
             }
             else
@@ -113,7 +119,6 @@ void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
 };
 
 void AmplitudeExtractor::calculateADSR()
-
 {
     int currentSignalSize = (int)currentSignalPowerSeq.size();
     float attackEndDetection;
@@ -160,6 +165,7 @@ void AmplitudeExtractor::calculateADSR()
         if (std::abs(maxSustainPower-minSustainPower) / maxSustainPower > sustainDiffRatio)
         {
             ADSRTime[0] = (attackDetectionMaxIndex);
+            ADSRTime[1] = 1.0;
             ADSRTime[2] = 1.0;
             ADSRTime[2] = 1.0;
             ADSRTime[3] = (releaseDetectionMaxIndex);   
@@ -167,6 +173,7 @@ void AmplitudeExtractor::calculateADSR()
         else
         {
             ADSRTime[0] = (attackDetectionMaxIndex);
+            ADSRTime[1] = 1.0;
             ADSRTime[2] = 1.0;
             ADSRTime[3] = (releaseDetectionMaxIndex);
         }
@@ -215,6 +222,17 @@ std::vector<float> AmplitudeExtractor::getAverageADSRCache()
         }
     }
     return returnedADSR;
+}
+
+std::vector<float>& AmplitudeExtractor::getFinalADSR()
+{
+    return finalADSR;
+}
+
+void AmplitudeExtractor::valueChanged (Value& value)
+{
+    this->sendChangeMessage();
+//    std::cout<<(int)currentCacheSize.getValue()<<std::endl;
 }
 
 

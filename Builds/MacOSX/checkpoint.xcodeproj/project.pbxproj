@@ -19,6 +19,14 @@
 		2B1714077E417241354A761D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E604B646554E3B3CF9CAA60 /* CoreMedia.framework */; };
 		305357E03010282BF97A4B8B /* include_juce_data_structures.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9D232F5C98CA9CA054E6C5B /* include_juce_data_structures.mm */; };
 		347F3C5CDF1B97273B99024F /* include_juce_cryptography.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9BC6577481B7B815138D51 /* include_juce_cryptography.mm */; };
+		4426B6FF1F9FB58E00965A71 /* MainUITabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4426B6FD1F9FB58E00965A71 /* MainUITabs.cpp */; };
+		4426B7011F9FB63E00965A71 /* MainUITabs.h in Resources */ = {isa = PBXBuildFile; fileRef = 4426B7001F9FB60D00965A71 /* MainUITabs.h */; };
+		4426B7031F9FB9E700965A71 /* TrainingTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4426B7021F9FB9E700965A71 /* TrainingTab.cpp */; };
+		4426B7051F9FCD4F00965A71 /* AmplitudeConfigTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4426B7041F9FCD4F00965A71 /* AmplitudeConfigTab.cpp */; };
+		4426B7071FA0846600965A71 /* DacControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4426B7061FA0846600965A71 /* DacControl.cpp */; };
+		4473E8241FAAC2770060DD98 /* TrainingTab.h in Resources */ = {isa = PBXBuildFile; fileRef = 4473E8231FAAC06D0060DD98 /* TrainingTab.h */; };
+		4473E8251FAAC27C0060DD98 /* AmplitudeConfigTab.h in Resources */ = {isa = PBXBuildFile; fileRef = 4473E8221FAABF560060DD98 /* AmplitudeConfigTab.h */; };
+		44B7A1C21FAB147F006D72B9 /* DacControl.h in Resources */ = {isa = PBXBuildFile; fileRef = 44B7A1C11FAB146E006D72B9 /* DacControl.h */; };
 		50FC6F5B42F4BD5FD9B98D03 /* include_juce_audio_processors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105163192234D54FA14A3CB2 /* include_juce_audio_processors.mm */; };
 		54036893C6866B27ADE6C59E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2939C46AFB5B8C8B56904F59 /* AVFoundation.framework */; };
 		5E54644F78AB57A6179C1231 /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB35916D195B6EF16D60337 /* DiscRecording.framework */; };
@@ -60,6 +68,14 @@
 		3490846E5852A6254237D8B8 /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = /Users/liuhanyu1030/Documents/JUCE/modules/juce_data_structures; sourceTree = "<absolute>"; };
 		3AC27F52DAB0FB3DB1043BBF /* juce_audio_utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_utils; path = /Users/liuhanyu1030/Documents/JUCE/modules/juce_audio_utils; sourceTree = "<absolute>"; };
 		3F28BA9B2D605D0C5772EA8C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4426B6FD1F9FB58E00965A71 /* MainUITabs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainUITabs.cpp; path = ../../Source/MainUITabs.cpp; sourceTree = "<group>"; };
+		4426B7001F9FB60D00965A71 /* MainUITabs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainUITabs.h; path = ../../Source/MainUITabs.h; sourceTree = "<group>"; };
+		4426B7021F9FB9E700965A71 /* TrainingTab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrainingTab.cpp; path = ../../Source/TrainingTab.cpp; sourceTree = "<group>"; };
+		4426B7041F9FCD4F00965A71 /* AmplitudeConfigTab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AmplitudeConfigTab.cpp; path = ../../Source/AmplitudeConfigTab.cpp; sourceTree = "<group>"; };
+		4426B7061FA0846600965A71 /* DacControl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DacControl.cpp; path = ../../Source/DacControl.cpp; sourceTree = "<group>"; };
+		4473E8221FAABF560060DD98 /* AmplitudeConfigTab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AmplitudeConfigTab.h; path = ../../Source/AmplitudeConfigTab.h; sourceTree = "<group>"; };
+		4473E8231FAAC06D0060DD98 /* TrainingTab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TrainingTab.h; path = ../../Source/TrainingTab.h; sourceTree = "<group>"; };
+		44B7A1C11FAB146E006D72B9 /* DacControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DacControl.h; path = ../../Source/DacControl.h; sourceTree = "<group>"; };
 		515C3DD9880FB618CE1B6CB6 /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = /Users/liuhanyu1030/Documents/JUCE/modules/juce_audio_formats; sourceTree = "<absolute>"; };
 		5B6B0E0627C51B995383FEFC /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		5B6CFAC2A571FFD57BABFAFF /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
@@ -226,11 +242,19 @@
 			children = (
 				86BBFAD8A5D7848A3B9AB512 /* GUI.cpp */,
 				E1A618444812A4DCC743308D /* GUI.h */,
+				4426B6FD1F9FB58E00965A71 /* MainUITabs.cpp */,
+				4426B7001F9FB60D00965A71 /* MainUITabs.h */,
+				4426B7021F9FB9E700965A71 /* TrainingTab.cpp */,
+				4473E8231FAAC06D0060DD98 /* TrainingTab.h */,
+				4426B7041F9FCD4F00965A71 /* AmplitudeConfigTab.cpp */,
+				4473E8221FAABF560060DD98 /* AmplitudeConfigTab.h */,
 				AE93CDBCCCF7997D10F44F44 /* AmplitudeExtractor.h */,
 				6CCDA1692E08300D231B4DAE /* AmplitudeExtractor.cpp */,
 				2EB24B4D8ECC4EA094768ABD /* AudioLiveScrollingDisplay.h */,
 				274799345334FA3CD73FBAAB /* MainComponent.cpp */,
 				911AC6E62F5A797C37B92746 /* Main.cpp */,
+				4426B7061FA0846600965A71 /* DacControl.cpp */,
+				44B7A1C11FAB146E006D72B9 /* DacControl.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -315,9 +339,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1C1D7F59581CB685BB9C95 /* RecentFilesMenuTemplate.nib in Resources */,
+				4426B7011F9FB63E00965A71 /* MainUITabs.h in Resources */,
 				AF4B53A890C9925B9BC196C2 /* GUI.h in Resources */,
 				1C14FEDF54641E847648CFA6 /* AudioLiveScrollingDisplay.h in Resources */,
 				2859C0234F043BDD24B2FEF6 /* AmplitudeExtractor.h in Resources */,
+				4473E8251FAAC27C0060DD98 /* AmplitudeConfigTab.h in Resources */,
+				4473E8241FAAC2770060DD98 /* TrainingTab.h in Resources */,
+				44B7A1C21FAB147F006D72B9 /* DacControl.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,11 +358,14 @@
 			files = (
 				1DB2C359458FADBC18187B02 /* GUI.cpp in Sources */,
 				F4CC91BAC902061401E0CA97 /* AmplitudeExtractor.cpp in Sources */,
+				4426B7051F9FCD4F00965A71 /* AmplitudeConfigTab.cpp in Sources */,
 				7B6E955BDE5CDC67A1A388B9 /* MainComponent.cpp in Sources */,
 				CF6A40EDE8DE81DF9EDF2D9B /* Main.cpp in Sources */,
 				241B3AEB88B86AEC08BD1158 /* include_juce_audio_basics.mm in Sources */,
 				050A109D9BF06E25719FF65B /* include_juce_audio_devices.mm in Sources */,
 				7E6F1210B28B13E7033A7ABC /* include_juce_audio_formats.mm in Sources */,
+				4426B7071FA0846600965A71 /* DacControl.cpp in Sources */,
+				4426B6FF1F9FB58E00965A71 /* MainUITabs.cpp in Sources */,
 				50FC6F5B42F4BD5FD9B98D03 /* include_juce_audio_processors.mm in Sources */,
 				D16B9539C38DC41CB843136E /* include_juce_audio_utils.mm in Sources */,
 				1F9EDEBD0AC18F70A39DCDF6 /* include_juce_core.mm in Sources */,
@@ -346,6 +377,7 @@
 				C7F423C3F84D9DF38C8816E5 /* include_juce_gui_extra.mm in Sources */,
 				9901FCD32103D34AAB83FC9A /* include_juce_opengl.mm in Sources */,
 				20E0EA78FBB2A3969307BA79 /* include_juce_video.mm in Sources */,
+				4426B7031F9FB9E700965A71 /* TrainingTab.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,9 +1,7 @@
 
 #pragma once
-
-
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.cpp"
+#include "MainUITabs.h"
 
 
 class GUI  : public Component
@@ -16,17 +14,10 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
 
-
-
 private:
- 
-    AudioDeviceManager deviceManager;
-    ScopedPointer<AudioRecorder> recorder;
 
-    ScopedPointer<TabbedComponent> tabbedComponent;
-    ScopedPointer<LiveScrollingAudioDisplay> liveAudioScroller;
-    ScopedPointer<RecordingThumbnail> recordingThumbnail;
-
+    MainUITabs tabs;
+    LookAndFeel_V4 customLook;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GUI)
 };
