@@ -927,9 +927,11 @@ build/intermediate/Debug/include_juce_gui_extra_6dee1c1a.o: \
  /usr/include/gtk-3.0/gtk/gtkx-autocleanups.h \
  /usr/include/glib-2.0/glib-unix.h \
  /usr/include/webkitgtk-4.0/webkit2/webkit2.h \
+ /usr/include/webkitgtk-4.0/webkit2/WebKitApplicationInfo.h \
+ /usr/include/webkitgtk-4.0/webkit2/WebKitDefines.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitAuthenticationRequest.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitCredential.h \
- /usr/include/webkitgtk-4.0/webkit2/WebKitDefines.h \
+ /usr/include/webkitgtk-4.0/webkit2/WebKitAutomationSession.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitBackForwardList.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitBackForwardListItem.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitContextMenu.h \
@@ -1015,6 +1017,8 @@ build/intermediate/Debug/include_juce_gui_extra_6dee1c1a.o: \
  /usr/include/webkitgtk-4.0/webkit2/WebKitNetworkProxySettings.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitNotification.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitNotificationPermissionRequest.h \
+ /usr/include/webkitgtk-4.0/webkit2/WebKitOptionMenu.h \
+ /usr/include/webkitgtk-4.0/webkit2/WebKitOptionMenuItem.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitPermissionRequest.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitPlugin.h \
  /usr/include/webkitgtk-4.0/webkit2/WebKitPrintCustomWidget.h \

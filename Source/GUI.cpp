@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "GUI.h"
-#include "MainUITabs.h"
+
 
 GUI::GUI ()
 {

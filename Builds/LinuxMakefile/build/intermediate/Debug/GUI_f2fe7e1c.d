@@ -467,5 +467,7 @@ build/intermediate/Debug/GUI_f2fe7e1c.o: ../../Source/GUI.cpp \
  /home/hanyu/JUCE/modules/juce_video/juce_video.h \
  /home/hanyu/JUCE/modules/juce_video/playback/juce_VideoComponent.h \
  /home/hanyu/JUCE/modules/juce_video/capture/juce_CameraDevice.h \
+ ../../Source/MainUITabs.h ../../Source/TrainingTab.h \
  ../../Source/MainComponent.cpp ../../Source/AudioLiveScrollingDisplay.h \
- ../../Source/AmplitudeExtractor.h
+ ../../Source/AmplitudeExtractor.h ../../Source/AmplitudeConfigTab.h \
+ ../../Source/DacControl.h

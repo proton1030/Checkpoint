@@ -6,6 +6,16 @@
               cppLanguageStandard="11" jucerVersion="5.1.2">
   <MAINGROUP id="XxUq6m" name="checkpoint">
     <GROUP id="{C6541130-9284-B5C2-B7A5-C21A59DC0859}" name="Source">
+      <FILE id="pHksOS" name="AmplitudeConfigTab.cpp" compile="1" resource="0"
+            file="Source/AmplitudeConfigTab.cpp"/>
+      <FILE id="iOrNf6" name="AmplitudeConfigTab.h" compile="1" resource="0"
+            file="Source/AmplitudeConfigTab.h"/>
+      <FILE id="IvVwZZ" name="DacControl.cpp" compile="1" resource="0" file="Source/DacControl.cpp"/>
+      <FILE id="N02Xgb" name="DacControl.h" compile="1" resource="0" file="Source/DacControl.h"/>
+      <FILE id="W36qOF" name="MainUITabs.cpp" compile="1" resource="0" file="Source/MainUITabs.cpp"/>
+      <FILE id="g3ILa2" name="MainUITabs.h" compile="1" resource="0" file="Source/MainUITabs.h"/>
+      <FILE id="L75X3h" name="TrainingTab.cpp" compile="1" resource="0" file="Source/TrainingTab.cpp"/>
+      <FILE id="nUzdFu" name="TrainingTab.h" compile="1" resource="0" file="Source/TrainingTab.h"/>
       <FILE id="nvO87k" name="GUI.cpp" compile="1" resource="0" file="Source/GUI.cpp"/>
       <FILE id="d2zi5Y" name="GUI.h" compile="1" resource="0" file="Source/GUI.h"/>
       <FILE id="Z0dQDU" name="AmplitudeExtractor.h" compile="1" resource="0"
@@ -20,28 +30,6 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
-      <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"/>
-        <CONFIGURATION name="Release" isDebug="1" optimisation="3" targetName="checkpoint"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../../juce"/>
-        <MODULEPATH id="juce_opengl" path="../../juce"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
-        <MODULEPATH id="juce_graphics" path="../../juce"/>
-        <MODULEPATH id="juce_events" path="../../juce"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce"/>
-        <MODULEPATH id="juce_core" path="../../juce"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
-        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
-      </MODULEPATHS>
-    </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"/>
@@ -64,6 +52,28 @@
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="checkpoint"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../../juce"/>
+        <MODULEPATH id="juce_opengl" path="../../juce"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
