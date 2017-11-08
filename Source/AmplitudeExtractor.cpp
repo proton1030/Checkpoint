@@ -21,7 +21,6 @@ AmplitudeExtractor::AmplitudeExtractor(const int& systemBufferSize, const double
 
 void AmplitudeExtractor::initialize()
 {
-    this->setComponentID("ADSRExt");
     
     //Internal variables settings
     currentBlockPower = 0.0f;

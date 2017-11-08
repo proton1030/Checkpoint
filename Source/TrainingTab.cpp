@@ -21,26 +21,26 @@ TrainingTab::TrainingTab() : deviceManager()
     addAndMakeVisible (recordingThumbnail = new RecordingThumbnail());
     recordingThumbnail->setName ("audioThumbnail");
     
-    addAndMakeVisible (trigger = new TextButton ("new button"));
-    trigger->setButtonText (TRANS("Test"));
+    addAndMakeVisible (trigger = new TextButton ("Test"));
     trigger->addListener (this);
     
-    addAndMakeVisible (reset = new TextButton ("new button"));
-    reset->setButtonText (TRANS("Reset"));
+    addAndMakeVisible (reset = new TextButton ("Reset"));
     reset->addListener (this);
-
-    deviceManager.initialise (2, 2, nullptr, true, String(), nullptr);
-    deviceManager.addAudioCallback (liveAudioScroller);
+    
+    deviceManager = new AudioDeviceManager();
+    deviceManager->initialiseWithDefaultDevices(2, 2);
+    deviceManager->addAudioCallback (liveAudioScroller);
     recorder = new AudioRecorder(recordingThumbnail->getAudioThumbnail(),recordingThumbnail->getDisplayfull());
-    recorder->addChangeListener(this);
-    deviceManager.addAudioCallback (recorder);
+    deviceManager->addAudioCallback (recorder);
+    
+    
     
 }
 
 TrainingTab::~TrainingTab()
 {
-    deviceManager.removeAudioCallback (recorder);
-    deviceManager.removeAudioCallback (liveAudioScroller);
+    deviceManager->removeAudioCallback (recorder);
+    deviceManager->removeAudioCallback (liveAudioScroller);
     liveAudioScroller = nullptr;
     recordingThumbnail = nullptr;
 }
@@ -60,7 +60,7 @@ void TrainingTab::resized()
 
 void TrainingTab::buttonStateChanged(Button* buttonThatWasClicked)
 {
-    if (buttonThatWasClicked == trigger)
+    if ( buttonThatWasClicked == trigger && trigger->isDown() )
     {
         sendChangeMessage();
     }
@@ -68,9 +68,12 @@ void TrainingTab::buttonStateChanged(Button* buttonThatWasClicked)
 
 void TrainingTab::buttonClicked (Button* buttonThatWasClicked)
 {
-//    if (buttonThatWasClicked == trigger)
-//    {
-//    }
+    if ( buttonThatWasClicked == trigger )
+        sendChangeMessage();
+    else if ( buttonThatWasClicked == reset )
+    {
+        
+    }
 }
 
 std::vector<float>& TrainingTab::getADSRValues()
@@ -83,9 +86,10 @@ bool TrainingTab::getTriggerButtonStatus()
     return trigger->isDown();
 }
 
-void TrainingTab::changeListenerCallback (ChangeBroadcaster* source)
+ScopedPointer<AmplitudeExtractor>& TrainingTab::getAmpExtModule()
 {
-    sendChangeMessage();
-    //    std::cout<<(int)currentCacheSize.getValue()<<std::endl;
+    return recorder->getAmpExtModule();
 }
+
+
 

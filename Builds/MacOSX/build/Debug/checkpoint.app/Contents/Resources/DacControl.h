@@ -13,16 +13,19 @@
 
 #define MaxVoltage 5.0f
 
-class DacControl : public Component, public HighResolutionTimer, public ChangeListener
+class DacControl : public Component, public HighResolutionTimer
 {
 public:
-    DacControl(const ScopedPointer<AmplitudeConfigTab>& amplitude);
+    DacControl();
     ~DacControl(){};
+    
+    void setADSRValues(std::vector<float> ADSRvals);
+    void setADSROutputVoltageStatus();
     
 private:
     void hiResTimerCallback() override;
     float ADSRVoltageOutput();
-    void changeListenerCallback(ChangeBroadcaster* source) override;
+//    void changeListenerCallback(ChangeBroadcaster* source) override;
     
     //ADSR Voltage Parameters
     int ADSRStatus;

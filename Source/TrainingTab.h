@@ -1,14 +1,14 @@
 //
 //  TrainingTab.h
 //  checkpoint
-//
+///Users/liuhanyu1030/Documents/JUCE/Checkpoint/Source/TrainingTab.h
 //  Created by Hanyu Liu on 11/1/17.
 //
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.cpp"
 
-class TrainingTab : public Component, public ChangeListener, public ChangeBroadcaster, public ButtonListener
+class TrainingTab : public Component, public ChangeBroadcaster, public ButtonListener
 {
 public:
     
@@ -20,19 +20,20 @@ public:
     std::vector<float>& getADSRValues();
     bool getTriggerButtonStatus();
     ScopedPointer<TextButton> trigger;
+    ScopedPointer<TextButton> reset;
+    ScopedPointer<AmplitudeExtractor>& getAmpExtModule();
     
 private:
-    void changeListenerCallback (ChangeBroadcaster* source) override;
     void buttonClicked (Button* buttonThatWasClicked) override;
     void buttonStateChanged(Button* buttonThatWasClicked) override;
     
-    AudioDeviceManager deviceManager;
+    ScopedPointer<AudioDeviceManager> deviceManager;
     ScopedPointer<AudioRecorder> recorder;
     
     ScopedPointer<LiveScrollingAudioDisplay> liveAudioScroller;
     ScopedPointer<RecordingThumbnail> recordingThumbnail;
     
-    ScopedPointer<TextButton> reset;
+    
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TrainingTab)
 };

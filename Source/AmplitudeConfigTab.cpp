@@ -11,7 +11,7 @@
 #include <math.h>
 
 
-AmplitudeConfigTab::AmplitudeConfigTab(const ScopedPointer<TrainingTab>& trainingtab)
+AmplitudeConfigTab::AmplitudeConfigTab()
 {
     
     addAndMakeVisible(attack);
@@ -42,8 +42,6 @@ AmplitudeConfigTab::AmplitudeConfigTab(const ScopedPointer<TrainingTab>& trainin
     switchMode->setButtonText (TRANS("ADSR"));
     switchMode->addListener (this);
     
-    trainingTabContents = trainingtab;
-    trainingTabContents->addChangeListener(this);
     currentSliderValues = {0.0, 0.0, 0.0, 0.0};
     currentTriggerStatus = false;
     
@@ -73,46 +71,35 @@ void AmplitudeConfigTab::resized()
 
 void AmplitudeConfigTab::sliderValueChanged(Slider* slider)
 {
-    currentSliderValues[0] = attack.getValue();
-    currentSliderValues[1] = decay.getValue();
-    currentSliderValues[2] = sustain.getValue();
-    currentSliderValues[3] = release.getValue();
-    sendChangeMessage();
-//    std::cout << attack.getValue() << std::endl;
-//    dispADSRValues(trainingTabContents->getADSRValues());
-}
-
-void AmplitudeConfigTab::setSliderValues(std::vector<float>& sliderValues)
-{
-    attack.setValue(round(sliderValues[0]));
-    decay.setValue(round(sliderValues[1]));
-    sustain.setValue(round(sliderValues[2]));
-    release.setValue(round(sliderValues[3]));
-}
-
-void AmplitudeConfigTab::changeListenerCallback(ChangeBroadcaster* source)
-{
-    if (currentOutputMode == false)
+    if (currentOutputMode)
     {
-        currentSliderValues = trainingTabContents->getADSRValues();
-        currentTriggerStatus = trainingTabContents->getTriggerButtonStatus();
-        setSliderValues(currentSliderValues);
+        currentSliderValues[0] = attack.getValue();
+        currentSliderValues[1] = decay.getValue();
+        currentSliderValues[2] = sustain.getValue();
+        currentSliderValues[3] = release.getValue();
+        sendChangeMessage();
     }
     else
     {
-        
+        attack.setValue(currentSliderValues[0]);
+        decay.setValue(currentSliderValues[1]);
+        sustain.setValue(currentSliderValues[2]);
+        release.setValue(currentSliderValues[3]);
     }
-    sendChangeMessage();
 }
 
-std::vector<float> AmplitudeConfigTab::getADSRSettings()
+void AmplitudeConfigTab::setSliderValues(std::vector<float> sliderValues)
+{
+    currentSliderValues = sliderValues;
+    attack.setValue(round(sliderValues[0]));
+    decay.setValue(round(sliderValues[1]));
+    sustain.setValue(sliderValues[2]);
+    release.setValue(round(sliderValues[3]));
+}
+
+std::vector<float> AmplitudeConfigTab::getADSRValues()
 {
     return currentSliderValues;
-}
-
-bool AmplitudeConfigTab::getTriggerButton()
-{
-    return trainingTabContents->getTriggerButtonStatus();
 }
 
 void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)

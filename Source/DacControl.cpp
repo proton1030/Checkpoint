@@ -7,11 +7,10 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "DacControl.h"
 #include <iostream>
+#include <vector>
 
-DacControl::DacControl(const ScopedPointer<AmplitudeConfigTab>& amplitude)
+DacControl::DacControl()
 {
-    amplitudeTabContents = amplitude;
-    amplitudeTabContents->addChangeListener(this);
     buttonPlay = false;
     ADSR = {0.0, 0.0, 0.0, 0.0};
     
@@ -27,22 +26,30 @@ DacControl::DacControl(const ScopedPointer<AmplitudeConfigTab>& amplitude)
 
 void DacControl::hiResTimerCallback()
 {
-    
-//   std::cout << ADSR[0] << " | " << ADSR[1] << " | "<< ADSR[2] << " | "<< ADSR[3] << std::endl;
-    float temp = ADSRVoltageOutput();
-    std::cout << temp << " | " << ADSRStatus << " | " << currentStatusCnt << " | " << (int)ADSR[0] << std::endl;
-//    test++;
+//    float temp =
+    ADSRVoltageOutput();
+//    std::cout << buttonPlay << std::endl;
+//    std::cout << temp << " | " << ADSRStatus << " | " << currentStatusCnt << " | " << (int)ADSR[0] << std::endl;
 }
 
-void DacControl::changeListenerCallback(ChangeBroadcaster* source)
+void DacControl::setADSRValues(std::vector<float> ADSRvals)
 {
-    ADSR = amplitudeTabContents->getADSRSettings();
-    buttonPlay = amplitudeTabContents->getTriggerButton();
-    if (buttonPlay == true)
+    ADSR = ADSRvals;
+//    std::cout << ADSR[0] << " | " << ADSR[1] << " | " << ADSR[2] << " | " << ADSR[3] << std::endl;
+}
+
+void DacControl::setADSROutputVoltageStatus()
+{
+    buttonPlay = !buttonPlay;
+    if (buttonPlay && !outputVoltageStatus)
+        outputVoltageStatus = true;
+    else if (buttonPlay && outputVoltageStatus)
     {
+        outputVoltageStatus = false;
         outputVoltageStatus = true;
     }
-//    std::cout << buttonPlay << std::endl;
+    
+    
 }
 
 float DacControl::ADSRVoltageOutput()
@@ -56,7 +63,7 @@ float DacControl::ADSRVoltageOutput()
 //            outputVoltageStatus = false;
         else if (ADSRStatus == 1)
         {
-            if (currentStatusCnt == (int)ADSR[0])
+            if (currentStatusCnt == (int)ADSR[0] || (int)ADSR[0] == 0)
             {
                 ADSRStatus++;
                 currentStatusCnt = 1;
@@ -69,7 +76,13 @@ float DacControl::ADSRVoltageOutput()
         }
         else if (ADSRStatus == 2)
         {
-            if (currentStatusCnt == (int)ADSR[1])
+            if ((int)ADSR[1] == 0 && (int)ADSR[0] > 0)
+            {
+                currentOutputVoltage = 0.0f;
+                ADSRStatus++;
+                currentStatusCnt = 1;
+            }
+            if (currentStatusCnt == (int)ADSR[1] || (int)ADSR[1] == 0)
             {
                 ADSRStatus++;
                 currentStatusCnt = 1;
@@ -82,12 +95,13 @@ float DacControl::ADSRVoltageOutput()
         }
         else if (ADSRStatus == 3)
         {
+            currentOutputVoltage = MaxVoltage * ADSR[2];
             if (buttonPlay == false)
                 ADSRStatus++;
         }
         else if (ADSRStatus == 4)
         {
-            if (currentStatusCnt == (int)ADSR[3])
+            if (currentStatusCnt == (int)ADSR[3]  || (int)ADSR[3] == 0)
             {
                 ADSRStatus = 0;
                 outputVoltageStatus = false;

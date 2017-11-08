@@ -79,13 +79,14 @@ private:
 //===============================================================================================================
 
 
-class AudioRecorder  : public Component, public AudioIODeviceCallback, public ChangeListener, public ChangeBroadcaster
+class AudioRecorder  : public Component, public AudioIODeviceCallback
 {
 public:
     AudioRecorder (AudioThumbnail& thumbnailToUpdate, bool& displayFullToUpdate) : thumbnail (thumbnailToUpdate), displayFull (displayFullToUpdate),
     sampleRate (0), nextSampleNum (0)
     {
         // backgroundThread.startThread();
+
     }
 
     ~AudioRecorder()
@@ -146,7 +147,7 @@ public:
         amplitudeExtractors.clear();
         for (int channel = 0;channel < numChannels;channel++) {
             AmplitudeExtractor* ampExt = new AmplitudeExtractor(systemBufferSize, sampleRate);
-            ampExt->addChangeListener(this);
+//            ampExt->addChangeListener(this);
             amplitudeExtractors.push_back(ampExt);
         }
 
@@ -188,11 +189,12 @@ public:
         return amplitudeExtractors[0]->getFinalADSR();
     }
     
-    void changeListenerCallback (ChangeBroadcaster* source) override
+    ScopedPointer<AmplitudeExtractor>& getAmpExtModule()
     {
-        sendChangeMessage();
+        return amplitudeExtractors[0];
     }
-
+    
+    
 private:
     AudioThumbnail& thumbnail;
     bool& displayFull;

@@ -11,7 +11,7 @@
 #include "DacControl.h"
 
 
-class MainUITabs : public TabbedComponent
+class MainUITabs : public TabbedComponent, public ChangeListener, public ButtonListener
 {
 public:
     
@@ -22,7 +22,10 @@ private:
     ScopedPointer<DacControl> DAC;
     ScopedPointer<TrainingTab> training;
     ScopedPointer<AmplitudeConfigTab> amplitude;
-    Value attack;
     
+    bool ampMode;
+    AmplitudeExtractor* ampExtModule;
+    void changeListenerCallback(ChangeBroadcaster* source) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
 };
     
