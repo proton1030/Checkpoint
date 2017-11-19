@@ -12,26 +12,22 @@ class AmplitudeConfigTab : public Component, public Slider::Listener, public But
 {
 public:
     AmplitudeConfigTab();
-    ~AmplitudeConfigTab(){};
+    ~AmplitudeConfigTab();
     void paint (Graphics& g) override;
     void resized() override;
     void setSliderValues(std::vector<float>);
     std::vector<float> getADSRValues();
     
-    bool currentOutputMode;
+    Value currentOutputMode;
     ScopedPointer<TextButton> switchMode;
 private:
-    
     void sliderValueChanged (Slider* slider) override;
     void buttonClicked (Button* buttonThatWasClicked) override;
-    
-    
-    
+
     std::vector<float> currentSliderValues;
     bool currentTriggerStatus;
     Label infoLabel;
-    Slider attack, decay, sustain, release;
-    
+    ScopedPointer<Slider> attack, decay, sustain, release;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AmplitudeConfigTab)
 };

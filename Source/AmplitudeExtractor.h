@@ -15,7 +15,7 @@ public:
     AmplitudeExtractor(
                  const int& systemBufferSize,
                  const double& sampleRate );
-    ~AmplitudeExtractor() {}
+    ~AmplitudeExtractor();
     
     void initialize();
     void clear();
@@ -61,9 +61,5 @@ private:
     int minAtkRelDist;
     float sustainDiffRatio;
     
-
-    
-
-
-    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AmplitudeExtractor)
 };

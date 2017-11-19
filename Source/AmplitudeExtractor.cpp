@@ -19,6 +19,11 @@ AmplitudeExtractor::AmplitudeExtractor(const int& systemBufferSize, const double
     
 };
 
+AmplitudeExtractor::~AmplitudeExtractor()
+{
+    clear();
+};
+
 void AmplitudeExtractor::initialize()
 {
     
@@ -38,7 +43,7 @@ void AmplitudeExtractor::initialize()
 
     //Initialization settings
     backgroundEstimationBlockNumThres = 20;
-    signalDetectionThres = 40;
+    signalDetectionThres = 1;
     signalDurationThres = 20;
     averagingOrder = 4;
     leastSearchSustainBlkLength = 50; //Release begin time search stops if maxval didn't get updated after searching this much blks.
@@ -60,6 +65,7 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
         currentBlockPower += pow(currentBlockPtr[i], 2.0f);
     }
     currentBlockRMS = sqrt (currentBlockPower / systemBufferSize);
+//    std::cout << currentBlockRMS << std::endl;
 
     if (earlyBlockNums <= backgroundEstimationBlockNumThres) {
         backgroundPowerEstimation(currentBlockRMS);
@@ -114,6 +120,8 @@ void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
     earlyBlockNums += 1;
     if (earlyBlockNums > backgroundEstimationBlockNumThres){
         backgroundPower /= backgroundEstimationBlockNumThres;
+        if (backgroundPower == 0)
+            backgroundPower = 0.0001;
     }
 };
 
@@ -165,7 +173,6 @@ void AmplitudeExtractor::calculateADSR()
         {
             ADSRTime[0] = (attackDetectionMaxIndex);
             ADSRTime[1] = 1.0;
-            ADSRTime[2] = 1.0;
             ADSRTime[2] = 1.0;
             ADSRTime[3] = (releaseDetectionMaxIndex);   
         }

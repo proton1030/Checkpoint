@@ -7,8 +7,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AmplitudeConfigTab.h"
-#include "TrainingTab.h"
+#include "ConvertADSRToSig.cpp"
 #include <vector>
 
 #define MaxVoltage 5.0f
@@ -20,25 +19,13 @@ public:
     ~DacControl(){};
     
     void setADSRValues(std::vector<float> ADSRvals);
-    void setADSROutputVoltageStatus();
     
+    bool buttonPlay;
 private:
     void hiResTimerCallback() override;
-    float ADSRVoltageOutput();
-//    void changeListenerCallback(ChangeBroadcaster* source) override;
-    
-    //ADSR Voltage Parameters
-    int ADSRStatus;
-    float currentOutputVoltage;
-    bool outputVoltageStatus;
-    int currentStatusCnt;
-    
-    float outputFrequency;
-    int test;
-    AmplitudeConfigTab* amplitudeTabContents;
-    std::vector<float> ADSR;
-    bool buttonPlay;
-    
+
+    ConvertADSRToSig ADSRToSig;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DacControl)
 };
 

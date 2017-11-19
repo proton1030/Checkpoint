@@ -17,9 +17,13 @@ class RecordingThumbnail  : public Component,
                             private ChangeListener
 {
 public:
-
+    String thumbnailText;
+    bool standbyFlag;
+    
     RecordingThumbnail(): thumbnailCache (10), thumbnail (512, formatManager, thumbnailCache), displayFullThumb (false)
     {
+        thumbnailText = "Standby";
+        standbyFlag = 1;
         formatManager.registerBasicFormats();
         thumbnail.addChangeListener (this);
     }
@@ -40,10 +44,12 @@ public:
 
     void paint (Graphics& g) override
     {
-        g.fillAll (Colours::darkgrey);
+        g.fillAll (Colour(0xff222222));
+        g.setFont(Font("Courier New", "Regular", 20.0f));
         g.setColour (Colours::lightgrey);
+        g.drawRect(-1.0f, 0.0f, (float)proportionOfWidth(1.0f)+2.0f, (float)proportionOfHeight(1.0f), 0.3f);
         setDisplayFullThumbnail(displayFull);
-        if (thumbnail.getTotalLength() > 0.0)
+        if (thumbnail.getTotalLength() > 0.0 && !standbyFlag)
         {
             const double endTime = displayFullThumb ? thumbnail.getTotalLength()
                                                     : jmax (30.0, thumbnail.getTotalLength());
@@ -55,7 +61,7 @@ public:
         else
         {
             g.setFont (14.0f);
-            g.drawFittedText ("No signal detected", getLocalBounds(), Justification::centred, 2);
+            g.drawFittedText (thumbnailText, getLocalBounds(), Justification::centred, 2);
         }
     }
 
@@ -65,6 +71,7 @@ private:
     AudioThumbnail thumbnail;
     bool displayFull;
     bool displayFullThumb;
+    
 
     void changeListenerCallback (ChangeBroadcaster* source) override
     {
@@ -86,7 +93,7 @@ public:
     sampleRate (0), nextSampleNum (0)
     {
         // backgroundThread.startThread();
-
+        trainingOrNot = true;
     }
 
     ~AudioRecorder()
@@ -166,16 +173,19 @@ public:
                                 float** outputChannelData, int numOutputChannels,
                                 int numSamples) override
     {
-        AudioSampleBuffer wavFileBuffer (const_cast<float**> (inputChannelData), thumbnail.getNumChannels(), numSamples);
+        AudioSampleBuffer wavFileBuffer (const_cast<float**> (inputChannelData), numOutputChannels, numSamples);
         AudioSampleBuffer readBuffer (const_cast<float**> (inputChannelData), numOutputChannels, numSamples);
         
-        for (int channel = 0; channel < numOutputChannels-1; channel++) {
-            signalStatus = amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
-            ADSRValues = amplitudeExtractors[channel]->getAverageADSRCache();
+//        std::cout<< trainingOrNot << std::endl;
+        if (trainingOrNot)
+        {
+            for (int channel = 0; channel < numOutputChannels-1; channel++) {
+                signalStatus = amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
+                
+            }
+
+            triggerThumbnail(numSamples, wavFileBuffer);
         }
-
-        triggerThumbnail(numSamples, wavFileBuffer);
-
         
         for (int i = 0; i < numOutputChannels; ++i)
         {
@@ -195,6 +205,12 @@ public:
     }
     
     
+    void setExtractorWorking(bool workingOrNot)
+    {
+        trainingOrNot = workingOrNot;
+    }
+    
+    
 private:
     AudioThumbnail& thumbnail;
     bool& displayFull;
@@ -207,7 +223,7 @@ private:
     int signalStatus;
     int lastSignalStatus;
     int64 nextSampleNum;
-    std::vector<float> ADSRValues;
+    bool trainingOrNot;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioRecorder)
 };

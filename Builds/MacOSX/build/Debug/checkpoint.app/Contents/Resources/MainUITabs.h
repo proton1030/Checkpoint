@@ -9,9 +9,10 @@
 #include "TrainingTab.h"
 #include "AmplitudeConfigTab.h"
 #include "DacControl.h"
+#include "PresetTab.h"
 
 
-class MainUITabs : public TabbedComponent, public ChangeListener, public ButtonListener
+class MainUITabs : public TabbedComponent, public ChangeListener, public ButtonListener, public Value::Listener
 {
 public:
     
@@ -19,13 +20,17 @@ public:
     ~MainUITabs();
     
 private:
+    void paint (Graphics& g) override;
+    
     ScopedPointer<DacControl> DAC;
     ScopedPointer<TrainingTab> training;
     ScopedPointer<AmplitudeConfigTab> amplitude;
+    ScopedPointer<PresetTab> presetSetting;
     
-    bool ampMode;
+    int ampMode;
     AmplitudeExtractor* ampExtModule;
     void changeListenerCallback(ChangeBroadcaster* source) override;
     void buttonClicked (Button* buttonThatWasClicked) override;
+    void valueChanged (Value& value) override;
 };
     

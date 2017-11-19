@@ -66,7 +66,7 @@ public:
                 if (const float* inputChannel = inputChannelData[chan])
                     inputSample += inputChannel[i];  // find the sum of all the channels
 
-            inputSample *= 0.5f; // boost the level to make it more easily visible.
+            inputSample *= 1.0f; // boost the level to make it more easily visible.
 
             pushSample (&inputSample, 1);
         }

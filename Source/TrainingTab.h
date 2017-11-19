@@ -19,11 +19,13 @@ public:
     void resized() override;
     std::vector<float>& getADSRValues();
     bool getTriggerButtonStatus();
-    ScopedPointer<TextButton> trigger;
-    ScopedPointer<TextButton> reset;
+    ScopedPointer<TextButton> train, trigger, reset;
     ScopedPointer<AmplitudeExtractor>& getAmpExtModule();
+    void setExtractorWorking(bool workingOrNot);
     
 private:
+    bool trainingStatus;
+    
     void buttonClicked (Button* buttonThatWasClicked) override;
     void buttonStateChanged(Button* buttonThatWasClicked) override;
     
@@ -32,8 +34,6 @@ private:
     
     ScopedPointer<LiveScrollingAudioDisplay> liveAudioScroller;
     ScopedPointer<RecordingThumbnail> recordingThumbnail;
-    
-    
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TrainingTab)
 };
