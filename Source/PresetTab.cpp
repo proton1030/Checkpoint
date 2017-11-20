@@ -22,11 +22,14 @@ PresetTab::PresetTab()
 //    yaxis->setSliderStyle (Slider::LinearVertical);
 //    yaxis->setTextBoxStyle (Slider::TextBoxAbove, false, 40, 20);
 //    yaxis->addListener (this);
+    addAndMakeVisible (switchMode = new TextButton ("ADSR Sig"));
+    switchMode->addListener (this);
     
     lastMousePosition.x = 80.0f;
     lastMousePosition.y = 80.0f;
     dragKnobBoundries = {10.0f,200.0f,10.0f,200.0f};
     circleRadius = 6.0f;
+    currentOutputMode = 1;
 
 }
 
@@ -44,6 +47,7 @@ void PresetTab::paint (Graphics& g)
     g.setColour (Colours::white);
     g.fillEllipse  (lastMousePosition.x - circleRadius*2, lastMousePosition.y - circleRadius*2, circleRadius*2, circleRadius*2);
     g.drawRect(dragKnobBoundries[0],dragKnobBoundries[2],dragKnobBoundries[1]-dragKnobBoundries[0],dragKnobBoundries[3]-dragKnobBoundries[2],0.5f);
+    
 }
 
 void PresetTab::resized()
@@ -53,6 +57,7 @@ void PresetTab::resized()
     
 //    xaxis->setBounds (40, 170, 200, 40);
 //    yaxis->setBounds (10, 10, 40, 170);
+    switchMode->setBounds(proportionOfWidth (0.7000f), proportionOfHeight (0.1000f), proportionOfWidth (0.2500f), proportionOfHeight (0.1500f));
 }
 
 
@@ -82,5 +87,27 @@ void PresetTab::mouseDrag (const MouseEvent& e)
 void PresetTab::mouseUp (const MouseEvent&)
 {
     repaint();
+}
+
+void PresetTab::buttonClicked (Button* buttonThatWasClicked)
+{
+    if (buttonThatWasClicked == switchMode)
+    {
+        if (currentOutputMode == 3)
+        {
+            switchMode->setButtonText (TRANS("ADSR Sig"));
+            currentOutputMode = 1;
+        }
+        else if (currentOutputMode == 1)
+        {
+            switchMode->setButtonText (TRANS("Amp Env Sig"));
+            currentOutputMode = 2;
+        }
+        else if (currentOutputMode == 2)
+        {
+            switchMode->setButtonText (TRANS("Spec Env Sig"));
+            currentOutputMode = 3;
+        }
+    }
 }
 

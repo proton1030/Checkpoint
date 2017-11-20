@@ -36,11 +36,13 @@ MainUITabs::MainUITabs() : TabbedComponent (TabbedButtonBar::TabsAtTop)
     training->train->addListener(this);
     training->reset->addListener(this);
     amplitude->switchMode->addListener(this);
+    presetSetting->switchMode->addListener(this);
     
     
     //Set listeners to Flags
     amplitude->currentOutputMode.addListener(this);
     spectral->currentOutputMode.addListener(this);
+    presetSetting->currentOutputMode.addListener(this);
     
 //    //Init settings
 //    training->setExtractorWorking(true);
@@ -122,24 +124,23 @@ void MainUITabs::buttonClicked (Button* buttonThatWasClicked)
         DAC->updateAllSig();
         amplitude->setSliderValues(temp);
     }
-    else if ( buttonThatWasClicked == training->train )
+    else if ( buttonThatWasClicked == presetSetting->switchMode )
     {
-        
-//        std::cout << training->train->getState() << std::endl;
-//        training->setExtractorWorking(true);
-    }
-    else if ( buttonThatWasClicked == amplitude->switchMode )
-    {
-
+//        DAC->outputSig = presetSetting->currentOutputMode.getValue();
     }
     
 }
 
 void MainUITabs::valueChanged(Value& value)
 {
-    ampMode = amplitude->currentOutputMode.getValue();
-    specMode = spectral->currentOutputMode.getValue();
-    DAC->DAC_TL.ampMode = ampMode;
-    DAC->DAC_TL.specMode = specMode;
+    if (value == presetSetting->currentOutputMode)
+        DAC->outputSig = presetSetting->currentOutputMode.getValue();
+    else
+    {
+        ampMode = amplitude->currentOutputMode.getValue();
+        specMode = spectral->currentOutputMode.getValue();
+        DAC->DAC_TL.ampMode = ampMode;
+        DAC->DAC_TL.specMode = specMode;
+    }
 }
 
