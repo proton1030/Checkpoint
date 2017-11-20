@@ -7,13 +7,14 @@
 #import <vector>
 #import <iostream>
 #define MaxVoltage 5.0f
+#include "SoundProfileStruct.h"
 
 class ConvertADSRToSig
 {
 public:
-    ConvertADSRToSig()
+    ConvertADSRToSig(SoundProfiles &profile)
     {
-        ADSR = {0.0f, 0.0f, 0.0f, 0.0f};
+        ADSR = profile.ampADSR;
         currentState = 0;
         outputVoltage = 0.0f;
         stateCnt = 0;
@@ -22,9 +23,9 @@ public:
         
     };
     
-    void setADSRValues(std::vector<float> ADSRInput)
+    void update(SoundProfiles &profile)
     {
-        ADSR = ADSRInput;
+        ADSR = profile.ampADSR;
     }
     
     float process(bool buttonStatus)

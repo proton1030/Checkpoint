@@ -21,6 +21,8 @@ public:
     bool getTriggerButtonStatus();
     ScopedPointer<TextButton> train, trigger, reset;
     ScopedPointer<AmplitudeExtractor>& getAmpExtModule();
+    ScopedPointer<AudioRecorder>& getRecorderModule();
+    ScopedPointer<SpectralExtractor>& getSpecExtModule();
     void setExtractorWorking(bool workingOrNot);
     
 private:

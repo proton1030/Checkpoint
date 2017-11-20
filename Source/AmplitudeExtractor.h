@@ -26,9 +26,8 @@ public:
     std::vector<float> getAverageADSRCache();
     std::vector<float>& getFinalADSR();
     void finalADSRSet(std::vector<float> ADSR);
-
     
-    
+    std::vector<float> currentAmplitudeEnvelope;
     
 private:
     void calculateADSR();
@@ -52,6 +51,7 @@ private:
     std::vector<std::vector<float>> ADSRCache;
     int averagingOrder;
     Value currentCacheSize;
+    
 
     //Tweak setting variables
     int backgroundEstimationBlockNumThres;

@@ -122,7 +122,7 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
         }
         else if (currentOutputMode == 1)
         {
-            switchMode->setButtonText (TRANS("ADSR"));
+            switchMode->setButtonText (TRANS("Override"));
             currentOutputMode = 2;
             attack->setColour(Slider::ColourIds::thumbColourId, Colours::lightgrey);
             decay->setColour(Slider::ColourIds::thumbColourId, Colours::lightgrey);
@@ -131,7 +131,7 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
         }
         else if (currentOutputMode == 2)
         {
-            switchMode->setButtonText (TRANS("Morph"));
+            switchMode->setButtonText (TRANS("Envelope"));
             currentOutputMode = 3;
             attack->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
             decay->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
@@ -140,7 +140,7 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
         }
         //[UserButtonCode_textButton] -- add your button handler code here..
         //[/UserButtonCode_textButton]
-        std::cout << "ampConfigTab:" << (int)currentOutputMode.getValue() << std::endl;
+//        std::cout << "ampConfigTab:" << (int)currentOutputMode.getValue() << std::endl;
     }
 }
 

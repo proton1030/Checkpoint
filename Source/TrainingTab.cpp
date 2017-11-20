@@ -121,6 +121,16 @@ ScopedPointer<AmplitudeExtractor>& TrainingTab::getAmpExtModule()
     return recorder->getAmpExtModule();
 }
 
+ScopedPointer<SpectralExtractor>& TrainingTab::getSpecExtModule()
+{
+    return recorder->getSpecExtModule();
+}
+
+ScopedPointer<AudioRecorder>& TrainingTab::getRecorderModule()
+{
+    return recorder;
+}
+
 void TrainingTab::setExtractorWorking(bool workingOrNot)
 {
     recorder->setExtractorWorking(workingOrNot);

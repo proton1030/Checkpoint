@@ -43,7 +43,7 @@ void AmplitudeExtractor::initialize()
 
     //Initialization settings
     backgroundEstimationBlockNumThres = 20;
-    signalDetectionThres = 1;
+    signalDetectionThres = 2;
     signalDurationThres = 20;
     averagingOrder = 4;
     leastSearchSustainBlkLength = 50; //Release begin time search stops if maxval didn't get updated after searching this much blks.
@@ -60,12 +60,12 @@ void AmplitudeExtractor::clear()
 
 int AmplitudeExtractor::process(const float* currentBlockPtr)
 {
+//    std::cout << backgroundPower << std::endl;
     currentBlockPower = 0.0f;
     for (int i = 0; i < systemBufferSize; i++) {
         currentBlockPower += pow(currentBlockPtr[i], 2.0f);
     }
     currentBlockRMS = sqrt (currentBlockPower / systemBufferSize);
-//    std::cout << currentBlockRMS << std::endl;
 
     if (earlyBlockNums <= backgroundEstimationBlockNumThres) {
         backgroundPowerEstimation(currentBlockRMS);
@@ -92,9 +92,8 @@ int AmplitudeExtractor::process(const float* currentBlockPtr)
             if (currentSignalDuration >= signalDurationThres)
             {
                 currentlyInSignalFlag = false;
-                // std::thread t(&AmplitudeExtractor::calculateADSR, this);
-                // t.detach();
                 calculateADSR();
+                currentAmplitudeEnvelope = currentSignalPowerSeq;
                 currentSignalPowerSeq = {};
                 currentSignalDuration = 0;
                 finalADSR = getAverageADSRCache();
@@ -120,6 +119,7 @@ void AmplitudeExtractor::backgroundPowerEstimation(float blockPower)
     earlyBlockNums += 1;
     if (earlyBlockNums > backgroundEstimationBlockNumThres){
         backgroundPower /= backgroundEstimationBlockNumThres;
+        backgroundPower *= signalDetectionThres;
         if (backgroundPower == 0)
             backgroundPower = 0.0001;
     }

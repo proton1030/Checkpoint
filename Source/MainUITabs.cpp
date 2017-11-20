@@ -15,19 +15,22 @@ MainUITabs::MainUITabs() : TabbedComponent (TabbedButtonBar::TabsAtTop)
     
     training = new TrainingTab();
     amplitude = new AmplitudeConfigTab();
+    spectral = new SpectralConfigTab();
     DAC = new DacControl();
     presetSetting = new PresetTab();
     
     addTab ("Train", Colours::black, training, true);
     addTab ("VCA", Colours::black, amplitude, true);
+    addTab ("VCF", Colours::black, spectral, true);
     addTab ("Morph", Colours::black, presetSetting, true);
     setTabBarDepth(25);
     
     //Set linteners to modules
     ampExtModule = training->getAmpExtModule();
-    ampExtModule->addChangeListener(this);
+    specExtModule = training->getSpecExtModule();
     training->addChangeListener(this);
     amplitude->addChangeListener(this);
+    training->getRecorderModule()->addChangeListener(this);
     
     //Set linsteners to buttons
     training->train->addListener(this);
@@ -37,6 +40,7 @@ MainUITabs::MainUITabs() : TabbedComponent (TabbedButtonBar::TabsAtTop)
     
     //Set listeners to Flags
     amplitude->currentOutputMode.addListener(this);
+    spectral->currentOutputMode.addListener(this);
     
 //    //Init settings
 //    training->setExtractorWorking(true);
@@ -71,9 +75,15 @@ void MainUITabs::paint (Graphics& g)
 
 void MainUITabs::changeListenerCallback(ChangeBroadcaster* source)
 {
-    if (source == ampExtModule && ampMode == 1)
+    if (source == training->getRecorderModule() && ampMode == 1)
     {
-        DAC->setADSRValues(training->getADSRValues());
+//        std::cout << "snippet" << std::endl;
+        DAC->DAC_TL.ampADSR = training->getADSRValues();
+        DAC->DAC_TL.ampEnv = ampExtModule->currentAmplitudeEnvelope;
+        DAC->DAC_TL.specCutoffEnv = specExtModule->specEnvCache;
+        DAC->DAC_TL.ampMode = 1;
+        DAC->DAC_TL.specMode = 1;
+        DAC->updateAllSig();
         amplitude->setSliderValues(training->getADSRValues());
     }
     else if (source == training)
@@ -82,7 +92,8 @@ void MainUITabs::changeListenerCallback(ChangeBroadcaster* source)
     }
     else if (source == amplitude  && ampMode == 2)
     {
-        DAC->setADSRValues(amplitude->getADSRValues());
+        DAC->DAC_TL.ampADSR = amplitude->getADSRValues();
+        DAC->updateAllSig();
     }
     else if (ampMode == 3)
     {
@@ -92,6 +103,13 @@ void MainUITabs::changeListenerCallback(ChangeBroadcaster* source)
     {
         std::cout << ampMode << std::endl;
     }
+    
+    
+//    if (source == ampExtModule && ampMode == 1)
+//    {
+//        DAC->setADSRValues(training->getADSRValues());
+//        amplitude->setSliderValues(training->getADSRValues());
+//    }
 }
 
 void MainUITabs::buttonClicked (Button* buttonThatWasClicked)
@@ -100,13 +118,14 @@ void MainUITabs::buttonClicked (Button* buttonThatWasClicked)
     {
         std::vector<float> temp = {0.0, 0.0, 0.0, 0.0};
         ampExtModule->clear();
-        DAC->setADSRValues(temp);
+        DAC->DAC_TL.ampADSR = temp;
+        DAC->updateAllSig();
         amplitude->setSliderValues(temp);
     }
     else if ( buttonThatWasClicked == training->train )
     {
         
-        std::cout << training->train->getState() << std::endl;
+//        std::cout << training->train->getState() << std::endl;
 //        training->setExtractorWorking(true);
     }
     else if ( buttonThatWasClicked == amplitude->switchMode )
@@ -114,11 +133,13 @@ void MainUITabs::buttonClicked (Button* buttonThatWasClicked)
 
     }
     
-    
 }
 
 void MainUITabs::valueChanged(Value& value)
 {
     ampMode = amplitude->currentOutputMode.getValue();
+    specMode = spectral->currentOutputMode.getValue();
+    DAC->DAC_TL.ampMode = ampMode;
+    DAC->DAC_TL.specMode = specMode;
 }
 

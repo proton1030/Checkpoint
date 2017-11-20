@@ -8,6 +8,9 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ConvertADSRToSig.cpp"
+#include "ConvertAmpEnvToSig.cpp"
+#include "ConvertSpecEnvToSig.cpp"
+#include "SoundProfileStruct.h"
 #include <vector>
 
 #define MaxVoltage 5.0f
@@ -19,13 +22,18 @@ public:
     ~DacControl(){};
     
     void setADSRValues(std::vector<float> ADSRvals);
+    void setEnvelopeValues(std::vector<float> currentEnvelope);
+    void updateAllSig();
     
     bool buttonPlay;
+    SoundProfiles DAC_TL;
 private:
     void hiResTimerCallback() override;
-
-    ConvertADSRToSig ADSRToSig;
-
+    
+    ScopedPointer<ConvertADSRToSig> ADSRToSig;
+    ScopedPointer<ConvertAmpEnvToSig> AmpEnvToSig;
+    ScopedPointer<ConvertSpecEnvToSig> SpecEnvToSig;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DacControl)
 };
 

@@ -8,6 +8,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioLiveScrollingDisplay.h"
 #include "AmplitudeExtractor.h"
+#include "SpectralExtractor.h"
 #include <iostream>
 #include <vector>
 
@@ -86,7 +87,7 @@ private:
 //===============================================================================================================
 
 
-class AudioRecorder  : public Component, public AudioIODeviceCallback
+class AudioRecorder  : public Component, public AudioIODeviceCallback, public ChangeBroadcaster
 {
 public:
     AudioRecorder (AudioThumbnail& thumbnailToUpdate, bool& displayFullToUpdate) : thumbnail (thumbnailToUpdate), displayFull (displayFullToUpdate),
@@ -94,6 +95,7 @@ public:
     {
         // backgroundThread.startThread();
         trainingOrNot = true;
+        sampleCnt = 0;
     }
 
     ~AudioRecorder()
@@ -101,10 +103,6 @@ public:
         stop();
     }
     
-    void initializing ()
-    {
-        
-    }
 
     // const File& file
     void startRecording ()
@@ -127,7 +125,6 @@ public:
 
     bool isRecording()
     {
-        std::cout << signalStatus << std::endl;
         return signalStatus;
     }
 
@@ -152,10 +149,12 @@ public:
         sampleRate = device->getCurrentSampleRate();
         systemBufferSize = device->getCurrentBufferSizeSamples();
         amplitudeExtractors.clear();
+        spectralExtractors.clear();
         for (int channel = 0;channel < numChannels;channel++) {
             AmplitudeExtractor* ampExt = new AmplitudeExtractor(systemBufferSize, sampleRate);
-//            ampExt->addChangeListener(this);
+            SpectralExtractor* specExt = new SpectralExtractor(systemBufferSize, sampleRate);
             amplitudeExtractors.push_back(ampExt);
+            spectralExtractors.push_back(specExt);
         }
 
         signalStatus = 0;
@@ -181,7 +180,14 @@ public:
         {
             for (int channel = 0; channel < numOutputChannels-1; channel++) {
                 signalStatus = amplitudeExtractors[channel]->process(readBuffer.getReadPointer(channel));
-                
+                spectralExtractors[channel]->process(readBuffer.getReadPointer(channel), signalStatus);
+            }
+            if (signalStatus == 1)
+                sampleCnt ++;
+            else if (signalStatus == 0 && sampleCnt > sampleThres)
+            {
+                sendChangeMessage();
+                sampleCnt = 0;
             }
 
             triggerThumbnail(numSamples, wavFileBuffer);
@@ -204,6 +210,11 @@ public:
         return amplitudeExtractors[0];
     }
     
+    ScopedPointer<SpectralExtractor>& getSpecExtModule()
+    {
+        return spectralExtractors[0];
+    }
+    
     
     void setExtractorWorking(bool workingOrNot)
     {
@@ -216,6 +227,7 @@ private:
     bool& displayFull;
     AudioSampleBuffer wavFileBuffer, readBuffer;
     std::vector<ScopedPointer<AmplitudeExtractor>> amplitudeExtractors;
+    std::vector<ScopedPointer<SpectralExtractor>> spectralExtractors;
     
     double sampleRate;
     int numChannels;
@@ -224,6 +236,8 @@ private:
     int lastSignalStatus;
     int64 nextSampleNum;
     bool trainingOrNot;
+    int sampleCnt;
+    int sampleThres = 20;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioRecorder)
 };

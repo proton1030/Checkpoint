@@ -3,9 +3,17 @@
 <JUCERPROJECT id="jelHjf" name="checkpoint" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.checkpoint" includeBinaryInAppConfig="1"
-              cppLanguageStandard="11" jucerVersion="5.1.2">
+              cppLanguageStandard="14" jucerVersion="5.1.2">
   <MAINGROUP id="XxUq6m" name="checkpoint">
     <GROUP id="{C6541130-9284-B5C2-B7A5-C21A59DC0859}" name="Source">
+      <FILE id="ovYKHz" name="ConvertADSRToSig.cpp" compile="1" resource="0"
+            file="Source/ConvertADSRToSig.cpp"/>
+      <FILE id="R5TPGi" name="PresetTab.cpp" compile="1" resource="0" file="Source/PresetTab.cpp"/>
+      <FILE id="N4xTIv" name="PresetTab.h" compile="1" resource="0" file="Source/PresetTab.h"/>
+      <FILE id="HtWpXH" name="SpectralExtractor.cpp" compile="1" resource="0"
+            file="Source/SpectralExtractor.cpp"/>
+      <FILE id="T8b2Dh" name="SpectralExtractor.h" compile="1" resource="0"
+            file="Source/SpectralExtractor.h"/>
       <FILE id="pHksOS" name="AmplitudeConfigTab.cpp" compile="1" resource="0"
             file="Source/AmplitudeConfigTab.cpp"/>
       <FILE id="iOrNf6" name="AmplitudeConfigTab.h" compile="1" resource="0"
@@ -50,6 +58,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../juce"/>
         <MODULEPATH id="juce_audio_devices" path="../../juce"/>
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+        <MODULEPATH id="juce_dsp" path="../modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -72,6 +81,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../juce"/>
         <MODULEPATH id="juce_audio_devices" path="../../juce"/>
         <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+        <MODULEPATH id="juce_dsp" path="../modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -84,6 +94,7 @@
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
@@ -92,4 +103,7 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>
