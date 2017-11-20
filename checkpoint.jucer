@@ -6,6 +6,14 @@
               cppLanguageStandard="14" jucerVersion="5.1.2">
   <MAINGROUP id="XxUq6m" name="checkpoint">
     <GROUP id="{C6541130-9284-B5C2-B7A5-C21A59DC0859}" name="Source">
+      <FILE id="qbpAlf" name="ConvertAmpEnvToSig.cpp" compile="1" resource="0"
+            file="Source/ConvertAmpEnvToSig.cpp"/>
+      <FILE id="OuV3rG" name="SoundProfileStruct.h" compile="1" resource="0"
+            file="Source/SoundProfileStruct.h"/>
+      <FILE id="JG1Ohx" name="ConvertEnvelopeToSig.cpp" compile="1" resource="0"
+            file="Source/ConvertEnvelopeToSig.cpp"/>
+      <FILE id="sJfz0T" name="ConvertSpecEnvToSig.cpp" compile="1" resource="0"
+            file="Source/ConvertSpecEnvToSig.cpp"/>
       <FILE id="ovYKHz" name="ConvertADSRToSig.cpp" compile="1" resource="0"
             file="Source/ConvertADSRToSig.cpp"/>
       <FILE id="R5TPGi" name="PresetTab.cpp" compile="1" resource="0" file="Source/PresetTab.cpp"/>
@@ -22,6 +30,10 @@
       <FILE id="N02Xgb" name="DacControl.h" compile="1" resource="0" file="Source/DacControl.h"/>
       <FILE id="W36qOF" name="MainUITabs.cpp" compile="1" resource="0" file="Source/MainUITabs.cpp"/>
       <FILE id="g3ILa2" name="MainUITabs.h" compile="1" resource="0" file="Source/MainUITabs.h"/>
+      <FILE id="U4wr3K" name="SpectralConfigTab.cpp" compile="1" resource="0"
+            file="Source/SpectralConfigTab.cpp"/>
+      <FILE id="PKujLh" name="SpectralConfigTab.h" compile="1" resource="0"
+            file="Source/SpectralConfigTab.h"/>
       <FILE id="L75X3h" name="TrainingTab.cpp" compile="1" resource="0" file="Source/TrainingTab.cpp"/>
       <FILE id="nUzdFu" name="TrainingTab.h" compile="1" resource="0" file="Source/TrainingTab.h"/>
       <FILE id="nvO87k" name="GUI.cpp" compile="1" resource="0" file="Source/GUI.cpp"/>

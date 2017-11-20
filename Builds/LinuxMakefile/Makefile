@@ -66,12 +66,16 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/ConvertAmpEnvToSig_260d7e23.o \
+  $(JUCE_OBJDIR)/ConvertEnvelopeToSig_45581a7c.o \
+  $(JUCE_OBJDIR)/ConvertSpecEnvToSig_8785ec78.o \
   $(JUCE_OBJDIR)/ConvertADSRToSig_44004d6a.o \
   $(JUCE_OBJDIR)/PresetTab_63410e97.o \
   $(JUCE_OBJDIR)/SpectralExtractor_46064281.o \
   $(JUCE_OBJDIR)/AmplitudeConfigTab_b8bcf539.o \
   $(JUCE_OBJDIR)/DacControl_47b6d900.o \
   $(JUCE_OBJDIR)/MainUITabs_96816734.o \
+  $(JUCE_OBJDIR)/SpectralConfigTab_bf0f59d0.o \
   $(JUCE_OBJDIR)/TrainingTab_a5094d3c.o \
   $(JUCE_OBJDIR)/GUI_f2fe7e1c.o \
   $(JUCE_OBJDIR)/AmplitudeExtractor_3fb3ddea.o \
@@ -104,6 +108,21 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
 
+$(JUCE_OBJDIR)/ConvertAmpEnvToSig_260d7e23.o: ../../Source/ConvertAmpEnvToSig.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertAmpEnvToSig.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertEnvelopeToSig_45581a7c.o: ../../Source/ConvertEnvelopeToSig.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertEnvelopeToSig.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertSpecEnvToSig_8785ec78.o: ../../Source/ConvertSpecEnvToSig.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertSpecEnvToSig.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ConvertADSRToSig_44004d6a.o: ../../Source/ConvertADSRToSig.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConvertADSRToSig.cpp"
@@ -132,6 +151,11 @@ $(JUCE_OBJDIR)/DacControl_47b6d900.o: ../../Source/DacControl.cpp
 $(JUCE_OBJDIR)/MainUITabs_96816734.o: ../../Source/MainUITabs.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MainUITabs.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SpectralConfigTab_bf0f59d0.o: ../../Source/SpectralConfigTab.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SpectralConfigTab.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TrainingTab_a5094d3c.o: ../../Source/TrainingTab.cpp
