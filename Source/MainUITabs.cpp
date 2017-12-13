@@ -23,7 +23,7 @@ MainUITabs::MainUITabs() : TabbedComponent (TabbedButtonBar::TabsAtTop)
     addTab ("VCA", Colours::black, amplitude, true);
     addTab ("VCF", Colours::black, spectral, true);
     addTab ("Morph", Colours::black, presetSetting, true);
-    setTabBarDepth(25);
+    setTabBarDepth(30);
     
     //Set linteners to modules
     ampExtModule = training->getAmpExtModule();

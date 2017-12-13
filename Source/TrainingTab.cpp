@@ -64,11 +64,11 @@ void TrainingTab::paint (Graphics& g)
 
 void TrainingTab::resized()
 {
-    liveAudioScroller->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (0.1500f));
-    recordingThumbnail->setBounds (0, proportionOfHeight (0.1500f), proportionOfWidth (1.0000f), proportionOfHeight (0.3000f));
-    train->setBounds(proportionOfWidth (0.2600f), proportionOfHeight (0.8000f), proportionOfWidth (0.4800f), proportionOfHeight (0.1500f));
-    trigger->setBounds(proportionOfWidth (0.0300f), proportionOfHeight (0.8000f), proportionOfWidth (0.2000f), proportionOfHeight (0.1500f));
-    reset->setBounds(proportionOfWidth (0.7700f), proportionOfHeight (0.8000f), proportionOfWidth (0.2000f), proportionOfHeight (0.1500f));
+    liveAudioScroller->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (0.1000f));
+    recordingThumbnail->setBounds (0, proportionOfHeight (0.1000f), proportionOfWidth (1.0000f), proportionOfHeight (0.1500f));
+    train->setBounds(proportionOfWidth (0.2600f), proportionOfHeight (0.8500f), proportionOfWidth (0.4800f), proportionOfHeight (0.1000f));
+    trigger->setBounds(proportionOfWidth (0.0300f), proportionOfHeight (0.8500f), proportionOfWidth (0.2000f), proportionOfHeight (0.1000f));
+    reset->setBounds(proportionOfWidth (0.7700f), proportionOfHeight (0.8500f), proportionOfWidth (0.2000f), proportionOfHeight (0.1000f));
 }
 
 void TrainingTab::buttonStateChanged(Button* buttonThatWasClicked)

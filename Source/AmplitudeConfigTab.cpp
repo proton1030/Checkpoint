@@ -15,26 +15,26 @@ AmplitudeConfigTab::AmplitudeConfigTab()
 {
     
     addAndMakeVisible(attack = new Slider ("Attack"));
-    attack->setSliderStyle (Slider::LinearVertical);
-    attack->setTextBoxStyle (Slider::TextBoxBelow, false, 100, 20);
+    attack->setSliderStyle (Slider::LinearBarVertical);
+    attack->setTextBoxStyle (Slider::TextBoxBelow, true, 100, 20);
     attack->setRange(0.0, 300.0, 0.1);
     attack->addListener(this);
 
     addAndMakeVisible(decay = new Slider ("Decay"));
-    decay->setSliderStyle (Slider::LinearVertical);
-    decay->setTextBoxStyle (Slider::TextBoxBelow, false, 100, 20);
+    decay->setSliderStyle (Slider::LinearBarVertical);
+    decay->setTextBoxStyle (Slider::TextBoxBelow, true, 100, 20);
     decay->setRange(0.0, 100.0, 0.1);
     decay->addListener(this);
 
     addAndMakeVisible(sustain = new Slider ("Sustain"));
-    sustain->setSliderStyle (Slider::LinearVertical);
-    sustain->setTextBoxStyle (Slider::TextBoxBelow, false, 100, 20);
+    sustain->setSliderStyle (Slider::LinearBarVertical);
+    sustain->setTextBoxStyle (Slider::TextBoxBelow, true, 100, 20);
     sustain->setRange(0.0, 1.0, 0.1);
     sustain->addListener(this);
 
     addAndMakeVisible(release = new Slider ("Release"));
-    release->setSliderStyle (Slider::LinearVertical);
-    release->setTextBoxStyle (Slider::TextBoxBelow, false, 100, 20);
+    release->setSliderStyle (Slider::LinearBarVertical);
+    release->setTextBoxStyle (Slider::TextBoxBelow, true, 100, 20);
     release->setRange(0.0, 300.0, 0.1);
     release->addListener(this);
     
@@ -50,6 +50,10 @@ AmplitudeConfigTab::AmplitudeConfigTab()
     decay->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
     sustain->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
     release->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
+    attack->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+    decay->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+    sustain->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+    release->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
 }
 
 AmplitudeConfigTab::~AmplitudeConfigTab()
@@ -67,11 +71,12 @@ void AmplitudeConfigTab::paint (Graphics& g)
 
 void AmplitudeConfigTab::resized()
 {
-    attack->setBounds (proportionOfWidth (0.0300f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-    decay->setBounds (proportionOfWidth (0.1500f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-    sustain->setBounds (proportionOfWidth (0.2700f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-    release->setBounds (proportionOfWidth (0.3900f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-    switchMode->setBounds(proportionOfWidth (0.6800f), proportionOfHeight (0.1000f), proportionOfWidth (0.2500f), proportionOfHeight (0.1500f));
+    attack->setBounds (proportionOfWidth (0.0300f), proportionOfHeight (0.1000f), proportionOfWidth (0.0800f), proportionOfHeight (0.8000f));
+    decay->setBounds (proportionOfWidth (0.1200f), proportionOfHeight (0.1000f), proportionOfWidth (0.0800f), proportionOfHeight (0.8000f));
+    sustain->setBounds (proportionOfWidth (0.2100f), proportionOfHeight (0.1000f), proportionOfWidth (0.0800f), proportionOfHeight (0.8000f));
+    release->setBounds (proportionOfWidth (0.3000f), proportionOfHeight (0.1000f), proportionOfWidth (0.0800f), proportionOfHeight (0.8000f));
+    switchMode->setBounds(proportionOfWidth (0.8200f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.1100f));
+    
 }
 
 void AmplitudeConfigTab::sliderValueChanged(Slider* slider)
@@ -119,6 +124,10 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
             decay->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
             sustain->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
             release->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
+            attack->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            decay->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            sustain->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            release->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
         }
         else if (currentOutputMode == 1)
         {
@@ -128,6 +137,10 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
             decay->setColour(Slider::ColourIds::thumbColourId, Colours::lightgrey);
             sustain->setColour(Slider::ColourIds::thumbColourId, Colours::lightgrey);
             release->setColour(Slider::ColourIds::thumbColourId, Colours::lightgrey);
+            attack->setColour(Slider::textBoxOutlineColourId, Colours::white);
+            decay->setColour(Slider::textBoxOutlineColourId, Colours::white);
+            sustain->setColour(Slider::textBoxOutlineColourId, Colours::white);
+            release->setColour(Slider::textBoxOutlineColourId, Colours::white);
         }
         else if (currentOutputMode == 2)
         {
@@ -137,6 +150,10 @@ void AmplitudeConfigTab::buttonClicked (Button* buttonThatWasClicked)
             decay->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
             sustain->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
             release->setColour(Slider::ColourIds::thumbColourId, Colours::darkgrey);
+            attack->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            decay->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            sustain->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
+            release->setColour(Slider::textBoxOutlineColourId, Colours::darkgrey);
         }
         //[UserButtonCode_textButton] -- add your button handler code here..
         //[/UserButtonCode_textButton]

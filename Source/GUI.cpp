@@ -15,6 +15,7 @@ GUI::GUI ()
     customLook.setColour(Slider::ColourIds::trackColourId, Colours::darkgrey);
     customLook.setColour(Slider::ColourIds::textBoxOutlineColourId, Colour(0x00222222));
     customLook.setColour(Slider::ColourIds::textBoxTextColourId, Colours::lightgrey);
+    customLook.setColour(Slider::textBoxOutlineColourId, Colours::white);
     
     addAndMakeVisible (tabs);
     tabs.setLookAndFeel (&customLook);
@@ -22,7 +23,7 @@ GUI::GUI ()
 //    tabs.setCurrentTabIndex (0);
     
     setOpaque (true);
-    setSize (320, 240);
+    setSize (800, 480);
 }
 
 GUI::~GUI ()

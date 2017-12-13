@@ -23,13 +23,16 @@ DacControl::DacControl()
 
 void DacControl::hiResTimerCallback()
 {
-    std::cout <<outputSig<<std::endl;
+//    std::cout <<outputSig<<std::endl;
+    float temp = 0.0f;
     if (outputSig == 1)
-        float temp = SpecEnvToSig->process(buttonPlay);
+        temp = ADSRToSig->process(buttonPlay);
     else if (outputSig == 2)
-        float temp = AmpEnvToSig->process(buttonPlay);
+        temp = AmpEnvToSig->process(buttonPlay);
     else
-        float temp = ADSRToSig->process(buttonPlay);
+        temp = SpecEnvToSig->process(buttonPlay);
+    std::cout << temp << std::endl;
+    
 
 }
 

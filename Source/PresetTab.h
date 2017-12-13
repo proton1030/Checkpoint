@@ -21,7 +21,7 @@ public:
     Value currentOutputMode;
     
 private:
-//    ScopedPointer<Slider> xaxis, yaxis;
+
     Point<float> lastMousePosition;
     
     std::vector<float> dragKnobBoundries;

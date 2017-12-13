@@ -45,7 +45,7 @@ void SpectralConfigTab::resized()
 {
     cutoff->setBounds(proportionOfWidth (0.0100f), proportionOfHeight (0.1500f), proportionOfWidth (0.3000f), proportionOfHeight (0.3500f));
     cutoffLabel->setBounds(proportionOfWidth (0.0300f), proportionOfHeight (0.0500f), proportionOfWidth (0.4000f), proportionOfHeight (0.1000f));
-    switchMode->setBounds(proportionOfWidth (0.6800f), proportionOfHeight (0.1000f), proportionOfWidth (0.2500f), proportionOfHeight (0.1500f));
+    switchMode->setBounds(proportionOfWidth (0.8200f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.1100f));
 }
 
 void SpectralConfigTab::sliderValueChanged(Slider* slider)

@@ -27,6 +27,7 @@ public:
     
     bool buttonPlay;
     SoundProfiles DAC_TL;
+    int outputSig;
 private:
     void hiResTimerCallback() override;
     

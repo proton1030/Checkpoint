@@ -11,24 +11,13 @@
 
 PresetTab::PresetTab()
 {
-//    addAndMakeVisible (xaxis = new Slider ("new slider"));
-//    xaxis->setRange (0, 10, 0);
-//    xaxis->setSliderStyle (Slider::LinearHorizontal);
-//    xaxis->setTextBoxStyle (Slider::TextBoxRight, false, 40, 20);
-//    xaxis->addListener (this);
-//
-//    addAndMakeVisible (yaxis = new Slider ("new slider"));
-//    yaxis->setRange (0, 10, 0);
-//    yaxis->setSliderStyle (Slider::LinearVertical);
-//    yaxis->setTextBoxStyle (Slider::TextBoxAbove, false, 40, 20);
-//    yaxis->addListener (this);
     addAndMakeVisible (switchMode = new TextButton ("ADSR Sig"));
     switchMode->addListener (this);
     
     lastMousePosition.x = 80.0f;
     lastMousePosition.y = 80.0f;
-    dragKnobBoundries = {10.0f,200.0f,10.0f,200.0f};
-    circleRadius = 6.0f;
+    dragKnobBoundries = {20.0f,430.0f,20.0f,430.0f};
+    circleRadius = 10.0f;
     currentOutputMode = 1;
 
 }
@@ -36,13 +25,10 @@ PresetTab::PresetTab()
 PresetTab::~PresetTab()
 {
     this->removeAllChangeListeners();
-//    xaxis = nullptr;
-//    yaxis = nullptr;
 }
 
 void PresetTab::paint (Graphics& g)
 {
-//    g.fillAll (Colour (0xff323e44));
     g.fillAll (Colours::black);
     g.setColour (Colours::white);
     g.fillEllipse  (lastMousePosition.x - circleRadius*2, lastMousePosition.y - circleRadius*2, circleRadius*2, circleRadius*2);
@@ -52,12 +38,8 @@ void PresetTab::paint (Graphics& g)
 
 void PresetTab::resized()
 {
-//    xaxis->setBounds (proportionOfWidth (0.0500f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-//    yaxis->setBounds (proportionOfWidth (0.2000f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.8000f));
-    
-//    xaxis->setBounds (40, 170, 200, 40);
-//    yaxis->setBounds (10, 10, 40, 170);
-    switchMode->setBounds(proportionOfWidth (0.7000f), proportionOfHeight (0.1000f), proportionOfWidth (0.2500f), proportionOfHeight (0.1500f));
+
+    switchMode->setBounds(proportionOfWidth (0.8200f), proportionOfHeight (0.1000f), proportionOfWidth (0.1500f), proportionOfHeight (0.1100f));
 }
 
 
@@ -79,7 +61,6 @@ void PresetTab::mouseDrag (const MouseEvent& e)
     {
         lastMousePosition.y = e.position.y + circleRadius;
     }
-    
     
     repaint();
 }
