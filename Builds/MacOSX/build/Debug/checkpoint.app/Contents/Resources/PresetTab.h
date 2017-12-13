@@ -24,7 +24,7 @@ private:
 
     Point<float> lastMousePosition;
     
-    std::vector<float> dragKnobBoundries;
+    std::vector<int> dragKnobBoundries;
     float circleRadius;
     
     void mouseDown (const MouseEvent& e) override;

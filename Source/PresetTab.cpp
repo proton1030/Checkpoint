@@ -16,9 +16,11 @@ PresetTab::PresetTab()
     
     lastMousePosition.x = 80.0f;
     lastMousePosition.y = 80.0f;
-    dragKnobBoundries = {20.0f,430.0f,20.0f,430.0f};
+    dragKnobBoundries = {20,430,20,430};
     circleRadius = 10.0f;
     currentOutputMode = 1;
+    
+    setBufferedToImage(true);
 
 }
 
@@ -32,7 +34,7 @@ void PresetTab::paint (Graphics& g)
     g.fillAll (Colours::black);
     g.setColour (Colours::white);
     g.fillEllipse  (lastMousePosition.x - circleRadius*2, lastMousePosition.y - circleRadius*2, circleRadius*2, circleRadius*2);
-    g.drawRect(dragKnobBoundries[0],dragKnobBoundries[2],dragKnobBoundries[1]-dragKnobBoundries[0],dragKnobBoundries[3]-dragKnobBoundries[2],0.5f);
+    g.drawRect(float(dragKnobBoundries[0]),float(dragKnobBoundries[2]),float(dragKnobBoundries[1]-dragKnobBoundries[0]),float(dragKnobBoundries[3]-dragKnobBoundries[2]),0.5f);
     
 }
 
@@ -62,12 +64,12 @@ void PresetTab::mouseDrag (const MouseEvent& e)
         lastMousePosition.y = e.position.y + circleRadius;
     }
     
-    repaint();
+    repaint(dragKnobBoundries[0],dragKnobBoundries[2],dragKnobBoundries[1]-dragKnobBoundries[0],dragKnobBoundries[3]-dragKnobBoundries[2]);
 }
 
 void PresetTab::mouseUp (const MouseEvent&)
 {
-    repaint();
+    repaint(dragKnobBoundries[0],dragKnobBoundries[2],dragKnobBoundries[1]-dragKnobBoundries[0],dragKnobBoundries[3]-dragKnobBoundries[2]);
 }
 
 void PresetTab::buttonClicked (Button* buttonThatWasClicked)

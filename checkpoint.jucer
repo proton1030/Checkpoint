@@ -3,15 +3,13 @@
 <JUCERPROJECT id="jelHjf" name="checkpoint" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.checkpoint" includeBinaryInAppConfig="1"
-              cppLanguageStandard="14" jucerVersion="5.1.2">
+              cppLanguageStandard="14" jucerVersion="5.2.0" companyCopyright="">
   <MAINGROUP id="XxUq6m" name="checkpoint">
     <GROUP id="{C6541130-9284-B5C2-B7A5-C21A59DC0859}" name="Source">
       <FILE id="qbpAlf" name="ConvertAmpEnvToSig.cpp" compile="1" resource="0"
             file="Source/ConvertAmpEnvToSig.cpp"/>
       <FILE id="OuV3rG" name="SoundProfileStruct.h" compile="1" resource="0"
             file="Source/SoundProfileStruct.h"/>
-      <FILE id="JG1Ohx" name="ConvertEnvelopeToSig.cpp" compile="1" resource="0"
-            file="Source/ConvertEnvelopeToSig.cpp"/>
       <FILE id="sJfz0T" name="ConvertSpecEnvToSig.cpp" compile="1" resource="0"
             file="Source/ConvertSpecEnvToSig.cpp"/>
       <FILE id="ovYKHz" name="ConvertADSRToSig.cpp" compile="1" resource="0"
@@ -52,8 +50,10 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="checkpoint"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="checkpoint"
+                       enablePluginBinaryCopyStep="1"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="checkpoint"
+                       enablePluginBinaryCopyStep="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../../juce"/>
