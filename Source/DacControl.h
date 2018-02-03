@@ -13,7 +13,6 @@
 #include "SoundProfileStruct.h"
 #include <vector>
 
-#define MaxVoltage 5.0f
 
 class DacControl : public Component, public HighResolutionTimer
 {

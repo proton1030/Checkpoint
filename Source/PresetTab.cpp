@@ -21,6 +21,7 @@ PresetTab::PresetTab()
     currentOutputMode = 1;
     
     setBufferedToImage(true);
+    setRepaintsOnMouseActivity(true);
 
 }
 

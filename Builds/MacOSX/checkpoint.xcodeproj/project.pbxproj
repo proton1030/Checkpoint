@@ -13,30 +13,30 @@
 		10573FB1EA8D165D7E9429D7 /* SpectralExtractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A1B62679165A3B4868C2C7E /* SpectralExtractor.cpp */; };
 		109B738A028B3163C7A7B01B /* DacControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C401723C07BC07130A3CE133 /* DacControl.cpp */; };
 		14CF5E56F028CCCD7938F486 /* include_juce_dsp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 782423772276EEAC94AD8A43 /* include_juce_dsp.mm */; };
-		1C14FEDF54641E847648CFA6 /* AudioLiveScrollingDisplay.h in Resources */ = {isa = PBXBuildFile; fileRef = 2EB24B4D8ECC4EA094768ABD /* AudioLiveScrollingDisplay.h */; };
+		1C14FEDF54641E847648CFA6 /* AudioLiveScrollingDisplay.h in Sources */ = {isa = PBXBuildFile; fileRef = 2EB24B4D8ECC4EA094768ABD /* AudioLiveScrollingDisplay.h */; };
 		1DB2C359458FADBC18187B02 /* GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BBFAD8A5D7848A3B9AB512 /* GUI.cpp */; };
 		1F9EDEBD0AC18F70A39DCDF6 /* include_juce_core.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDB2621132905E6151D3F37E /* include_juce_core.mm */; };
 		20E0EA78FBB2A3969307BA79 /* include_juce_video.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC7077BBD58016D8A305FB8 /* include_juce_video.mm */; };
 		241B3AEB88B86AEC08BD1158 /* include_juce_audio_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = E8AAFA16D63A317F91407FB2 /* include_juce_audio_basics.mm */; };
-		274AC3AE2D955C06AAB0BE22 /* AmplitudeConfigTab.h in Resources */ = {isa = PBXBuildFile; fileRef = A946C7E58C40320464D31937 /* AmplitudeConfigTab.h */; };
-		2859C0234F043BDD24B2FEF6 /* AmplitudeExtractor.h in Resources */ = {isa = PBXBuildFile; fileRef = AE93CDBCCCF7997D10F44F44 /* AmplitudeExtractor.h */; };
+		274AC3AE2D955C06AAB0BE22 /* AmplitudeConfigTab.h in Sources */ = {isa = PBXBuildFile; fileRef = A946C7E58C40320464D31937 /* AmplitudeConfigTab.h */; };
+		2859C0234F043BDD24B2FEF6 /* AmplitudeExtractor.h in Sources */ = {isa = PBXBuildFile; fileRef = AE93CDBCCCF7997D10F44F44 /* AmplitudeExtractor.h */; };
 		2B1714077E417241354A761D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E604B646554E3B3CF9CAA60 /* CoreMedia.framework */; };
 		2E03EFE46925C2DBB6720005 /* MainUITabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 559DA4019D457BB877EB5E93 /* MainUITabs.cpp */; };
 		305357E03010282BF97A4B8B /* include_juce_data_structures.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9D232F5C98CA9CA054E6C5B /* include_juce_data_structures.mm */; };
 		347F3C5CDF1B97273B99024F /* include_juce_cryptography.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9BC6577481B7B815138D51 /* include_juce_cryptography.mm */; };
 		4768E9BD36B6E2578C7F231A /* SpectralConfigTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E78D36E1BD585AAFB513AA8 /* SpectralConfigTab.cpp */; };
-		47F41C577E4D58DCE62B82A2 /* SpectralExtractor.h in Resources */ = {isa = PBXBuildFile; fileRef = 1CC008E206A3EA43063D858F /* SpectralExtractor.h */; };
+		47F41C577E4D58DCE62B82A2 /* SpectralExtractor.h in Sources */ = {isa = PBXBuildFile; fileRef = 1CC008E206A3EA43063D858F /* SpectralExtractor.h */; };
 		50FC6F5B42F4BD5FD9B98D03 /* include_juce_audio_processors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105163192234D54FA14A3CB2 /* include_juce_audio_processors.mm */; };
 		54036893C6866B27ADE6C59E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2939C46AFB5B8C8B56904F59 /* AVFoundation.framework */; };
 		5485C6973016B7FA49AA6798 /* ConvertSpecEnvToSig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832FEA8B3D41992EAA48B8F8 /* ConvertSpecEnvToSig.cpp */; };
-		5A6DB2F41B05C289AB953F36 /* SoundProfileStruct.h in Resources */ = {isa = PBXBuildFile; fileRef = 91E43A432B1E5C453B526206 /* SoundProfileStruct.h */; };
-		5D65FBF0C0DB8BD3E68502AC /* MainUITabs.h in Resources */ = {isa = PBXBuildFile; fileRef = F146FAAC9E8DA5F1F63875C7 /* MainUITabs.h */; };
+		5A6DB2F41B05C289AB953F36 /* SoundProfileStruct.h in Sources */ = {isa = PBXBuildFile; fileRef = 91E43A432B1E5C453B526206 /* SoundProfileStruct.h */; };
+		5D65FBF0C0DB8BD3E68502AC /* MainUITabs.h in Sources */ = {isa = PBXBuildFile; fileRef = F146FAAC9E8DA5F1F63875C7 /* MainUITabs.h */; };
 		5E54644F78AB57A6179C1231 /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB35916D195B6EF16D60337 /* DiscRecording.framework */; };
 		62C066CA632A75C6DE164B29 /* TrainingTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 615B8B9BF6A84535E9EB3B5F /* TrainingTab.cpp */; };
 		67656CC4A547833227775168 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C6D5579DBC65EF13A47F459 /* IOKit.framework */; };
 		6BBC072143ED423832D17759 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85690D1207812266C0D4AF0B /* AVKit.framework */; };
-		6DDAEB49CDC1A9789EAB5214 /* DacControl.h in Resources */ = {isa = PBXBuildFile; fileRef = 3D188F4E8D62B625FADD4689 /* DacControl.h */; };
-		756C20F153277A986B8DAC55 /* SpectralConfigTab.h in Resources */ = {isa = PBXBuildFile; fileRef = ED861EA4761733240CE461BE /* SpectralConfigTab.h */; };
+		6DDAEB49CDC1A9789EAB5214 /* DacControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 3D188F4E8D62B625FADD4689 /* DacControl.h */; };
+		756C20F153277A986B8DAC55 /* SpectralConfigTab.h in Sources */ = {isa = PBXBuildFile; fileRef = ED861EA4761733240CE461BE /* SpectralConfigTab.h */; };
 		7B6E955BDE5CDC67A1A388B9 /* MainComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274799345334FA3CD73FBAAB /* MainComponent.cpp */; };
 		7E6F1210B28B13E7033A7ABC /* include_juce_audio_formats.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3CE61C12C93EC4E5B8F6FE8 /* include_juce_audio_formats.mm */; };
 		86EC3C707F8AB901672FFCF8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200A0C5CAD61A44C88DB37C7 /* Cocoa.framework */; };
@@ -44,9 +44,9 @@
 		940E2B9B99C77AC87095BE31 /* include_juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4138EFE1745FF4BF3CA56E1 /* include_juce_graphics.mm */; };
 		96E7D0450B7A5AF028BD500D /* include_juce_gui_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71FAA7053F73E701F08A96AF /* include_juce_gui_basics.mm */; };
 		9901FCD32103D34AAB83FC9A /* include_juce_opengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = C166145DF344E44C9CF99674 /* include_juce_opengl.mm */; };
-		9ED4A6BC55CDC260821F09BD /* TrainingTab.h in Resources */ = {isa = PBXBuildFile; fileRef = A09BA9F2EEF7BC6A6A1A794B /* TrainingTab.h */; };
+		9ED4A6BC55CDC260821F09BD /* TrainingTab.h in Sources */ = {isa = PBXBuildFile; fileRef = A09BA9F2EEF7BC6A6A1A794B /* TrainingTab.h */; };
 		AF1C1D7F59581CB685BB9C95 /* RecentFilesMenuTemplate.nib in Resources */ = {isa = PBXBuildFile; fileRef = C23E3B248FE8DE5DEE98F367 /* RecentFilesMenuTemplate.nib */; };
-		AF4B53A890C9925B9BC196C2 /* GUI.h in Resources */ = {isa = PBXBuildFile; fileRef = E1A618444812A4DCC743308D /* GUI.h */; };
+		AF4B53A890C9925B9BC196C2 /* GUI.h in Sources */ = {isa = PBXBuildFile; fileRef = E1A618444812A4DCC743308D /* GUI.h */; };
 		B80FD9EF0AC2E4C259857D80 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78AD37A904E88B9B1493A1F /* WebKit.framework */; };
 		BE4D78409E7C4EEEA1F476C2 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6B0E0627C51B995383FEFC /* CoreAudio.framework */; };
 		C7F423C3F84D9DF38C8816E5 /* include_juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B6CFAC2A571FFD57BABFAFF /* include_juce_gui_extra.mm */; };
@@ -54,7 +54,7 @@
 		D16B9539C38DC41CB843136E /* include_juce_audio_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = F2954C87D4852ECC274A0A67 /* include_juce_audio_utils.mm */; };
 		D1CA2D1251320B6D548D1A96 /* AmplitudeConfigTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E31AA73B5111DAE11A2A1CC /* AmplitudeConfigTab.cpp */; };
 		D2F17AF527C163B2E3C97100 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B56A3B3323982E2C13D7BA1 /* Accelerate.framework */; };
-		D7A18456D0258773A77AA1AC /* PresetTab.h in Resources */ = {isa = PBXBuildFile; fileRef = 95F50364C7CBA537F783C198 /* PresetTab.h */; };
+		D7A18456D0258773A77AA1AC /* PresetTab.h in Sources */ = {isa = PBXBuildFile; fileRef = 95F50364C7CBA537F783C198 /* PresetTab.h */; };
 		DEDA48040A5B69FEFB530DD3 /* ConvertAmpEnvToSig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8F37F3E7D72FC337AD636F5B /* ConvertAmpEnvToSig.cpp */; };
 		E1A2CBEA1DAA1BE97601EC85 /* ConvertADSRToSig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 811F4B9A2987CBD781F7FCE8 /* ConvertADSRToSig.cpp */; };
 		E33F743460ED58BB773EF573 /* PresetTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A987129AD738044DA34CC1AD /* PresetTab.cpp */; };
@@ -374,17 +374,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1C1D7F59581CB685BB9C95 /* RecentFilesMenuTemplate.nib in Resources */,
-				5A6DB2F41B05C289AB953F36 /* SoundProfileStruct.h in Resources */,
-				47F41C577E4D58DCE62B82A2 /* SpectralExtractor.h in Resources */,
-				274AC3AE2D955C06AAB0BE22 /* AmplitudeConfigTab.h in Resources */,
-				756C20F153277A986B8DAC55 /* SpectralConfigTab.h in Resources */,
-				2859C0234F043BDD24B2FEF6 /* AmplitudeExtractor.h in Resources */,
-				1C14FEDF54641E847648CFA6 /* AudioLiveScrollingDisplay.h in Resources */,
-				AF4B53A890C9925B9BC196C2 /* GUI.h in Resources */,
-				5D65FBF0C0DB8BD3E68502AC /* MainUITabs.h in Resources */,
-				9ED4A6BC55CDC260821F09BD /* TrainingTab.h in Resources */,
-				6DDAEB49CDC1A9789EAB5214 /* DacControl.h in Resources */,
-				D7A18456D0258773A77AA1AC /* PresetTab.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,17 +385,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEDA48040A5B69FEFB530DD3 /* ConvertAmpEnvToSig.cpp in Sources */,
+				5A6DB2F41B05C289AB953F36 /* SoundProfileStruct.h in Sources */,
 				5485C6973016B7FA49AA6798 /* ConvertSpecEnvToSig.cpp in Sources */,
 				E1A2CBEA1DAA1BE97601EC85 /* ConvertADSRToSig.cpp in Sources */,
 				E33F743460ED58BB773EF573 /* PresetTab.cpp in Sources */,
+				D7A18456D0258773A77AA1AC /* PresetTab.h in Sources */,
 				10573FB1EA8D165D7E9429D7 /* SpectralExtractor.cpp in Sources */,
+				47F41C577E4D58DCE62B82A2 /* SpectralExtractor.h in Sources */,
 				D1CA2D1251320B6D548D1A96 /* AmplitudeConfigTab.cpp in Sources */,
+				274AC3AE2D955C06AAB0BE22 /* AmplitudeConfigTab.h in Sources */,
 				109B738A028B3163C7A7B01B /* DacControl.cpp in Sources */,
+				6DDAEB49CDC1A9789EAB5214 /* DacControl.h in Sources */,
 				2E03EFE46925C2DBB6720005 /* MainUITabs.cpp in Sources */,
+				5D65FBF0C0DB8BD3E68502AC /* MainUITabs.h in Sources */,
 				4768E9BD36B6E2578C7F231A /* SpectralConfigTab.cpp in Sources */,
+				756C20F153277A986B8DAC55 /* SpectralConfigTab.h in Sources */,
 				62C066CA632A75C6DE164B29 /* TrainingTab.cpp in Sources */,
+				9ED4A6BC55CDC260821F09BD /* TrainingTab.h in Sources */,
 				1DB2C359458FADBC18187B02 /* GUI.cpp in Sources */,
+				AF4B53A890C9925B9BC196C2 /* GUI.h in Sources */,
+				2859C0234F043BDD24B2FEF6 /* AmplitudeExtractor.h in Sources */,
 				F4CC91BAC902061401E0CA97 /* AmplitudeExtractor.cpp in Sources */,
+				1C14FEDF54641E847648CFA6 /* AudioLiveScrollingDisplay.h in Sources */,
 				7B6E955BDE5CDC67A1A388B9 /* MainComponent.cpp in Sources */,
 				CF6A40EDE8DE81DF9EDF2D9B /* Main.cpp in Sources */,
 				241B3AEB88B86AEC08BD1158 /* include_juce_audio_basics.mm in Sources */,

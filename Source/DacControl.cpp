@@ -30,7 +30,10 @@ void DacControl::hiResTimerCallback()
     else if (outputSig == 2)
         temp = AmpEnvToSig->process(buttonPlay);
     else
-        temp = SpecEnvToSig->process(buttonPlay);
+        if (DAC_TL.specMode == 2)
+            temp = SpecEnvToSig->process(buttonPlay);
+//        else
+//            temp =
     std::cout << temp << std::endl;
     
 

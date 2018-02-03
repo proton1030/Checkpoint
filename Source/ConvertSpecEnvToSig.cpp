@@ -14,7 +14,7 @@
 
 #import <vector>
 #import <iostream>
-#define MaxVoltage 5.0f
+#define MaxVoltage 4096.0f
 #include "SoundProfileStruct.h"
 
 class ConvertSpecEnvToSig
