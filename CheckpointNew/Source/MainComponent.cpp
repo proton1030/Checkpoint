@@ -13,15 +13,11 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-    addAndMakeVisible (listBox);
-    listBox.setRowHeight (20);
-    // listBox.setModel (this);   // Tell the listbox where to get its data model
-    listBox.setColour (ListBox::textColourId, Colours::black);
-    listBox.setColour (ListBox::backgroundColourId, Colours::white);
-
+    addAndMakeVisible(mainMenu);
+    mainMenu.setBounds(0, 0, 320, 240);
+    mainMenu.getHardwareControlClasss(hardwareCtrl);
+    
     setSize (320, 240);
-
-
 }
 
 MainComponent::~MainComponent()
@@ -36,7 +32,7 @@ void MainComponent::paint (Graphics& g)
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::white);
-    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+//    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
 }
 
 void MainComponent::resized()

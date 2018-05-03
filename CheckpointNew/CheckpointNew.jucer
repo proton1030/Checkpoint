@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="CheckpointNew" projectType="guiapp" jucerVersion="5.3.1">
+<JUCERPROJECT name="CheckpointNew" jucerVersion="5.3.1" pluginFormats="buildStandalone">
   <MAINGROUP id="qiQLeR" name="CheckpointNew">
     <GROUP id="{3CDD88D5-DCA1-B0E0-3F15-933668D006A8}" name="Source">
-      <FILE id="zfgSgp" name="ListItems.cpp" compile="1" resource="0" file="Source/ListItems.cpp"/>
-      <FILE id="diTtX0" name="ListItems.h" compile="0" resource="0" file="Source/ListItems.h"/>
+      <GROUP id="{78C22DEA-4A01-1B90-B98A-3720ECCB03E0}" name="Control">
+        <FILE id="xuuMQ1" name="HardwareControl.cpp" compile="1" resource="0"
+              file="Source/HardwareControl.cpp"/>
+        <FILE id="PXVH8p" name="HardwareControl.h" compile="0" resource="0"
+              file="Source/HardwareControl.h"/>
+      </GROUP>
+      <GROUP id="{347CBA6B-420D-1E0A-DE77-78AD1BD28150}" name="GUI">
+        <FILE id="VyN0jB" name="ControllerList.cpp" compile="1" resource="0"
+              file="Source/ControllerList.cpp"/>
+        <FILE id="WTHzVE" name="ControllerList.h" compile="0" resource="0"
+              file="Source/ControllerList.h"/>
+        <FILE id="zfgSgp" name="ListItems.cpp" compile="1" resource="0" file="Source/ListItems.cpp"/>
+        <FILE id="diTtX0" name="ListItems.h" compile="0" resource="0" file="Source/ListItems.h"/>
+      </GROUP>
       <FILE id="bYI4xq" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="j5Wlbh" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
@@ -53,16 +65,16 @@
     </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS/>
 </JUCERPROJECT>
